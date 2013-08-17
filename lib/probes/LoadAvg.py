@@ -1,3 +1,5 @@
+
+
 class LoadAvg(object):
 
     def __init__(self):
@@ -5,9 +7,12 @@ class LoadAvg(object):
 
     def report(self):
         
+        f = open("/proc/loadavg","r")
+        spl = f.read().split()
+        f.close()
         return {
-            '1min': 0.0,
-            '5min': 0.0,
-            '15min': 0.0,
+            '1min': spl[0],
+            '5min': spl[1],
+            '15min': spl[2],
         }
-        
+

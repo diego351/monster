@@ -9,4 +9,4 @@ class Postgres(object):
     def report(self):
         select = "SELECT * FROM pg_stat_database WHERE datname = '%s'" % self.dbName
         self.cursor.execute(select)
-        return self.cursor.fetchone()   
+        return dict(self.cursor.fetchone())

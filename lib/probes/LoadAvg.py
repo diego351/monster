@@ -1,5 +1,3 @@
-
-
 class LoadAvg(object):
 
     def __init__(self):

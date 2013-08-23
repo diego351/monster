@@ -15,8 +15,8 @@ class Diary(object):
     def write_mem_info(self, mem_info):
         self.mem_info.append(mem_info)
 
-    def read_mem_info(self):
-        return self.mem_info
+    def read_mem_info(self, how_many=50):
+        return self.mem_info[-how_many:]
 
 class DiaryManager(BaseManager):
     pass

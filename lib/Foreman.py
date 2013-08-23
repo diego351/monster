@@ -1,5 +1,7 @@
 import time
+import sys
 from multiprocessing import Process
+from probes.osx import MemInfo
 from probes.osx import LoadAvg
 
 class Foreman(object):
@@ -8,7 +10,8 @@ class Foreman(object):
         self.diary = diary
         # Hardcoding some things for now.
         self.probes = {
-            'LoadAvg': LoadAvg()        
+            'LoadAvg': LoadAvg(), 
+            'MemInfo': MemInfo()
         }
 
         self.worker_ps = None
@@ -27,14 +30,16 @@ class Foreman(object):
     def stop(self):
         print "[!] Telling the foreman to take a break.."
         self.worker_ps.terminate()
+        self.worker_ps.join()
 
     def run(self):
         while True:
             self.probe_system()
-            time.sleep(1)
+            time.sleep(2)
 
     def probe_system(self):
         probe_time = int(time.time())
         #print "[*] Probing system, probe time: %s" % (time.ctime(probe_time))
         
         self.diary.write_load(self.probes['LoadAvg'].report())
+        self.diary.write_mem_info(self.probes['MemInfo'].report())

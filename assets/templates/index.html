@@ -9,9 +9,20 @@
         console.log(response);
         var loadTable = [];   
         loadTable[0] = ['Index', '1m', '5m', '15m'];
+        if (response.l < 50) {
+          for (var i = 0; i < 50 - response.l; i++) {
+            loadEntry = [
+              i,
+              0.0,
+              0.0,
+              0.0
+            ]
+            loadTable.push(loadEntry);
+          }
+        }
         for (var i = 0; i < response.l; i++) {
           loadEntry = [
-            i,
+            i + (50 - response.l),
             parseFloat(response.load[i]['1min']),
             parseFloat(response.load[i]['5min']),
             parseFloat(response.load[i]['15min'])
@@ -36,20 +47,46 @@
         chart.draw(chartData, options);
 
         if (!refresh) {
-          refresh = setInterval(getLoadAndPaintShit, 1000);
+          refresh = setInterval(getLoadAndPaintShit, 2000);
         }
         
       });
     };
 
+    function getMemInfoAndBakePie() {
+      $.ajax('/api/mem_info', { dataType: 'json' }).done(function(response) {
+        console.log(response);
+        var memTable = [];
+        memTable[0] = ['Type', 'MB'];
+        memTable[1] = ['Free', response.mem_info[response.l - 1]['free']];
+        memTable[2] = ['Used', response.mem_info[response.l - 1]['used']]; 
+        var pieData = google.visualization.arrayToDataTable(memTable);
+        var options = {
+          title: "Memory usage",
+          pieHole: 0.4,
+          pieSliceText: 'value'
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('memory_pie'));
+        chart.draw(pieData, options);
+        
+        if (!pie_refresh) {
+          pie_refresh = setInterval(getMemInfoAndBakePie, 3000); 
+        }
+
+      }); 
+    }
+
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(getLoadAndPaintShit);
+    google.setOnLoadCallback(getMemInfoAndBakePie);
 
     var refresh = false;
+    var pie_refresh = false;
     </script>
 
   </head>
   <body>
     <div id="chart_div" style="width:900px;height:500px;margin:auto;"></div>
+    <div id="memory_pie" style="width:600px;height:400px;margin:auto;"></div>
   </body>
 </html>

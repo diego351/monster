@@ -5,11 +5,12 @@ sys.path.append('lib')
 
 from Artist import Artist
 from Foreman import Foreman
-from Diary import Diary
+from Diary import DiaryManager
 
 try:
-    diary = Diary()
-    diary.start()
+    diary_manager = DiaryManager()
+    diary_manager.start()
+    diary = diary_manager.Diary()
 
     foreman = Foreman(diary)
     foreman.start()
@@ -26,7 +27,6 @@ except KeyboardInterrupt:
 
     artist.stop()
     foreman.stop()
-    diary.stop()
 
     print "[*] Exiting cleanly... was it good for you?"
     exit()

@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    
+    function getLoadAndPaintShit() {
+      $.ajax('/api/load', { dataType: 'json' }).done(function(response) {
+        console.log(response);
+        var loadTable = [];   
+        loadTable[0] = ['Index', '1m', '5m', '15m'];
+        for (var i = 0; i < response.l; i++) {
+          loadEntry = [
+            i,
+            parseFloat(response.load[i]['1min']),
+            parseFloat(response.load[i]['5min']),
+            parseFloat(response.load[i]['15min'])
+          ];
+
+          loadTable.push(loadEntry);
+        }
+
+        var options = {
+          title: 'System load',
+          curveType: 'function',
+          vAxis: {
+            maxValue: 3.0,
+            minValue: 0.0,
+            gridlines: {
+              count: 16
+            }
+          }
+        };
+        var chartData = google.visualization.arrayToDataTable(loadTable);
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(chartData, options);
+
+        if (!refresh) {
+          refresh = setInterval(getLoadAndPaintShit, 1000);
+        }
+        
+      });
+    };
+
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(getLoadAndPaintShit);
+
+    var refresh = false;
+    </script>
+
+  </head>
+  <body>
+    <div id="chart_div" style="width:900px;height:500px;margin:auto;"></div>
+  </body>
+</html>

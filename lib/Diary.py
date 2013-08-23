@@ -1,13 +1,17 @@
+from multiprocessing.managers import BaseManager
+
 class Diary(object):
-
     def __init__(self):
-        self.load_record = []
+        self.load = []
 
-    def start(self):
-        pass
+    def write_load(self, load_values):
+        self.load.append(load_values)
 
-    def stop(self):
-        print "[!] Closing the diary."
+    def read_load(self, how_many=50):
+        # Return how_many elements, counting from the end.
+        return self.load[-how_many:]
 
-    def write_load(self, load_report):
-        self.load_record.append(load_report)
+class DiaryManager(BaseManager):
+    pass
+
+DiaryManager.register('Diary', Diary)

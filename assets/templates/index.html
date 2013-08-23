@@ -59,11 +59,13 @@
         var memTable = [];
         memTable[0] = ['Type', 'MB'];
         memTable[1] = ['Free', response.mem_info[response.l - 1]['free']];
-        memTable[2] = ['Used', response.mem_info[response.l - 1]['used']]; 
+        memTable[2] = ['Active', response.mem_info[response.l - 1]['active']]; 
+        memTable[3] = ['Inactive', response.mem_info[response.l - 1]['inactive']]; 
+        memTable[4] = ['Wired', response.mem_info[response.l - 1]['wired']]; 
         var pieData = google.visualization.arrayToDataTable(memTable);
         var options = {
           title: "Memory usage",
-          pieHole: 0.4,
+          pieHole: 0.3,
           pieSliceText: 'value'
         };
         var chart = new google.visualization.PieChart(document.getElementById('memory_pie'));
@@ -76,17 +78,50 @@
       }); 
     }
 
+    function getMemInfoAndPaintLayers() {
+      $.ajax('/api/mem_info', { dataType: 'json' }).done(function(response) {
+        var memTable = [];
+        memTable[0] = ['Index', 'Wired', 'Active', 'Inactive', 'Free'];
+        for (var i = 0; i < response.l; i++) {
+          memEntry = [
+            i,
+            response.mem_info[i]['wired'],
+            response.mem_info[i]['active'],
+            response.mem_info[i]['inactive'],
+            response.mem_info[i]['free']
+          ];
+          console.log("memEntry " + i + ": " + memEntry);
+          memTable.push(memEntry);
+        }
+        var areaData = new google.visualization.arrayToDataTable(memTable);
+        var options = {
+          isStacked: true,
+          title: 'Memory usage over time'
+        };
+        var chart = new google.visualization.AreaChart(document.getElementById('memory_area'));
+        chart.draw(areaData, options);
+
+        if (!area_refresh) {
+          area_refresh = setInterval(getMemInfoAndPaintLayers, 3000);
+        }
+      }); 
+    }
+
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(getLoadAndPaintShit);
     google.setOnLoadCallback(getMemInfoAndBakePie);
+    google.setOnLoadCallback(getMemInfoAndPaintLayers);
 
     var refresh = false;
     var pie_refresh = false;
+    var area_refresh = false;
+
     </script>
 
   </head>
   <body>
     <div id="chart_div" style="width:900px;height:500px;margin:auto;"></div>
     <div id="memory_pie" style="width:600px;height:400px;margin:auto;"></div>
+    <div id="memory_area" style="width:900px;height:500px;margin:auto;"></div>
   </body>
 </html>

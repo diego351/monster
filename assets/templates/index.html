@@ -1,5 +1,13 @@
 <html>
   <head>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.1/pure-min.css">
+    <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,500,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,300' rel='stylesheet' type='text/css'>
+    <style>
+      body {
+        font-family: 'Open Sans', sans-serif;
+      }
+    </style>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -32,7 +40,6 @@
         }
 
         var options = {
-          title: 'System load',
           curveType: 'function',
           vAxis: {
             maxValue: 3.0,
@@ -64,7 +71,6 @@
         memTable[4] = ['Wired', response.mem_info[response.l - 1]['wired']]; 
         var pieData = google.visualization.arrayToDataTable(memTable);
         var options = {
-          title: "Memory usage",
           pieHole: 0.3,
           pieSliceText: 'value'
         };
@@ -96,7 +102,6 @@
         var areaData = new google.visualization.arrayToDataTable(memTable);
         var options = {
           isStacked: true,
-          title: 'Memory usage over time'
         };
         var chart = new google.visualization.AreaChart(document.getElementById('memory_area'));
         chart.draw(areaData, options);
@@ -120,8 +125,22 @@
 
   </head>
   <body>
-    <div id="chart_div" style="width:900px;height:500px;margin:auto;"></div>
-    <div id="memory_pie" style="width:600px;height:400px;margin:auto;"></div>
-    <div id="memory_area" style="width:900px;height:500px;margin:auto;"></div>
+    <div class="pure-g">
+      <div class="pure-u-1-5" style="height:400px;"><h1>load</h1></div>
+      <div class="pure-u-3-5" id="chart_div" style="height:400px"></div>
+      <div class="pure-u-1-5" style="height:400px;">2/6</div>
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-5" style="background-color:#16a085;height:400px;">memory now</div>  
+      <div class="pure-u-3-5" id="memory_pie" style="height:400px;background-color:#f7f7f7;"></div>
+      <div class="pure-u-1-5" style="background-color:#bdc3c7;height:400px">Desc.</div>
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-5"><h2>memory over time</h2></div>
+      <div class="pure-u-3-5" id="memory_area" style="height:500px;"></div>
+      <div class="pure-u-1-5"></div>
+    </div>
   </body>
 </html>

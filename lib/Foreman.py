@@ -1,4 +1,5 @@
 import time
+import os
 import sys
 from multiprocessing import Process
 from probes.osx import MemInfo
@@ -8,22 +9,22 @@ class Foreman(object):
     
     def __init__(self, diary):
         self.diary = diary
-        # Hardcoding some things for now.
-        self.probes = {
-            'LoadAvg': LoadAvg(), 
-            'MemInfo': MemInfo()
-        }
-
+        self.probes = {}
         self.worker_ps = None
 
-    def arm_probe(self, probe_name):
-        # I need to think this through, I'm falling asleep right now.
-        os_name, stat_name = probe_name.split('.')
-        self.probes[stat_name] = __import__('probes.' + probe_name).__call__()
-        print "Loaded probe from config file: %s" % (probe_name,)
+    def load_probes(self, probe_list):
+        for probe in probe_list:
+            os_name, stat_name = probe.split('.')
+            # This isn't perfect: we're importing the OS-representing
+            # module too many times. Will do for now.
+            mod = __import__('probes.' + os_name, fromlist=[stat_name])
+            klass = getattr(mod, stat_name)
+            self.probes[stat_name] = klass()
+
         print self.probes
 
     def start(self):
+        print "[&] Foreman.start() in %s." % (os.getpid(),)
         self.worker_ps = Process(target=self.run)
         self.worker_ps.start()
 
@@ -33,6 +34,7 @@ class Foreman(object):
         self.worker_ps.join()
 
     def run(self):
+        print "[&] Foreman run(): %s." % (os.getpid(),)
         while True:
             self.probe_system()
             time.sleep(2)

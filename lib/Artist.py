@@ -12,9 +12,8 @@ class Artist(object):
         self.diary = diary
         
         app = Flask(__name__, template_folder='../assets/templates')
-        app.debug = True
         app.diary = diary
-            
+
         @app.route('/')
         def index():
             return render_template('index.html')
@@ -39,6 +38,7 @@ class Artist(object):
         self.app = app
 
     def start(self):
+
         self.flask_ps = Process(target=self.app.run)
         self.flask_ps.start()
 

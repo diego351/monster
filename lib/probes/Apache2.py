@@ -49,7 +49,8 @@ class Apache2(object):
             header, link, protocol = splitted[1].split()
             code, size = splitted[2].split()
             # sure, we have a lot of info, lets leave them for next features. 
-
+        
+        log.close()
         return {"transfer":transfer,
                 "requests":requests,
                 }

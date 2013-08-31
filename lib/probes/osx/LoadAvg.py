@@ -8,8 +8,8 @@ class LoadAvg(object):
         raw_values = check_output(['sysctl', '-n', 'vm.loadavg'])
         load_values = raw_values.split()[1:4]
         return {
-            '1min': load_values[0],
-            '5min': load_values[1],
-            '15min': load_values[2],
+            '1min': float(load_values[0]),
+            '5min': float(load_values[1]),
+            '15min': float(load_values[2]),
         }
 

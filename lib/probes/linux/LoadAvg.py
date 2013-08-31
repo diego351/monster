@@ -9,8 +9,8 @@ class LoadAvg(object):
         spl = f.read().split()
         f.close()
         return {
-            '1min': spl[0],
-            '5min': spl[1],
-            '15min': spl[2],
+            '1min': float(spl[0]),
+            '5min': float(spl[1]),
+            '15min': float(spl[2]),
         }
 

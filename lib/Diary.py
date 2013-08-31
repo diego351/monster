@@ -2,21 +2,17 @@ from multiprocessing.managers import BaseManager
 
 class Diary(object):
     def __init__(self):
-        self.load = []
-        self.mem_info = []
+        self.database = {}
 
-    def write_load(self, load_values):
-        self.load.append(load_values)
+    def write(self, probe_name, value):
+        try:
+            self.database[probe_name].append(value)
+        except KeyError:
+            self.database[probe_name] = [value]
 
-    def read_load(self, how_many=50):
-        # Return how_many elements, counting from the end.
-        return self.load[-how_many:]
+    def read(self, probe_name, how_many=50):
+        return self.database[probe_name][-how_many:]
 
-    def write_mem_info(self, mem_info):
-        self.mem_info.append(mem_info)
-
-    def read_mem_info(self, how_many=50):
-        return self.mem_info[-how_many:]
 
 class DiaryManager(BaseManager):
     pass

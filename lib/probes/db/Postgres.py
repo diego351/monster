@@ -3,9 +3,15 @@ import psycopg2.extras
 
 
 class Postgres(object):
-    def __init__(self,username,password,db):
-        self.dbName = db
-        self.connString = "host='localhost' dbname='%s' user='%s' password='%s'" %(self.dbName,username,password)
+    def __init__(self, parameters):
+        self.database = parameters.get('database')
+        self.username = parameters.get('username')
+        self.password = parameters.get('password')
+
+        self.connString = "host='localhost' dbname='%s' user='%s' password='%s'" % (self.database,
+                                                                                    self.username,
+                                                                                    self.password)
+
         self.conn = psycopg2.connect(self.connString)
         self.conn.autocommit = True
         self.firstTime = True
@@ -18,8 +24,8 @@ class Postgres(object):
                             }
 
     def getCurrentData(self):
-        cursor =self.conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-        select = "SELECT * FROM pg_stat_database WHERE datname = '%s'" % self.dbName
+        cursor = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        select = "SELECT * FROM pg_stat_database WHERE datname = '%s'" % self.database
         cursor.execute(select)
         temp = cursor.fetchone()
         return {

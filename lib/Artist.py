@@ -20,7 +20,7 @@ class Artist(object):
 
         @app.route('/api/load')
         def api_load():
-            load_record = app.diary.read_load()
+            load_record = app.diary.read('LoadAvg')
             return jsonify({
                 'load': load_record, 
                 'l': len(load_record) 
@@ -28,10 +28,26 @@ class Artist(object):
 
         @app.route('/api/mem_info')
         def api_mem_info():
-            mem_info_record = app.diary.read_mem_info()
+            mem_info_record = app.diary.read('MemInfo')
             return jsonify({
                 'mem_info': mem_info_record,
                 'l': len(mem_info_record)
+            })
+
+        @app.route('/api/apache')
+        def api_apache():
+            apache_activity = app.diary.read('Apache2')
+            return jsonify({
+                'apache_activity': apache_activity,
+                'l': len(apache_activity),
+            })
+
+        @app.route('/api/postgres')
+        def api_postgres():
+            postgres_stats = app.diary.read('Postgres')
+            return jsonify({
+                'postgres_stats': postgres_stats,
+                'l': len(postgres_stats)
             })
 
         # Assign to self, so other methods can interact with it.

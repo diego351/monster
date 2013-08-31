@@ -12,14 +12,22 @@ class Foreman(object):
         self.probes = {}
         self.worker_ps = None
 
-    def load_probes(self, probe_list):
-        for probe in probe_list:
+    def load_probes(self, config):
+        for probe in config.options('probes'):
             os_name, stat_name = probe.split('.')
             # This isn't perfect: we're importing the OS-representing
             # module too many times. Will do for now.
             mod = __import__('probes.' + os_name, fromlist=[stat_name])
             klass = getattr(mod, stat_name)
-            self.probes[stat_name] = klass()
+            # We check if this probe has a config section.
+            # If it does, we turn it into a dict and pass to the
+            # probe's constructor so it can deal with it.
+            if probe in config.sections():
+                probe_opts = dict(config.items(probe))
+            else:
+                probe_opts = None
+
+            self.probes[stat_name] = klass(probe_opts)
 
         print self.probes
 
@@ -41,7 +49,8 @@ class Foreman(object):
 
     def probe_system(self):
         probe_time = int(time.time())
-        #print "[*] Probing system, probe time: %s" % (time.ctime(probe_time))
-        
-        self.diary.write_load(self.probes['LoadAvg'].report())
-        self.diary.write_mem_info(self.probes['MemInfo'].report())
+        # Note: remember about .iter() vs .iteritems()
+        for probe_name, probe_obj in self.probes.iteritems():
+            print probe_name, probe_obj
+            # Signature follows .write("MemInfo", MemInfo.report())
+            self.diary.write(probe_name, probe_obj.report())

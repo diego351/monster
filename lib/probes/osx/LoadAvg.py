@@ -1,6 +1,8 @@
 from subprocess import check_output
 
 class LoadAvg(object):
+    def __init__(self, options):
+        pass
 
     def report(self):
         raw_values = check_output(['sysctl', '-n', 'vm.loadavg'])

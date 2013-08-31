@@ -1,2 +1,2 @@
-from MySQL import MySQL
+#from MySQL import MySQL
 from Postgres import Postgres

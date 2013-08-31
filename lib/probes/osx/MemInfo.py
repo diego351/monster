@@ -3,6 +3,9 @@ import commands
 import math
 
 class MemInfo:
+    def __init__(self, options):
+        pass
+
     def reportOld(self):
         top_ps = subprocess.Popen(['top', '-l', '1'], stdout=subprocess.PIPE)
         phys_mem = subprocess.check_output(('grep', 'PhysMem'), stdin=top_ps.stdout)

@@ -1,13 +1,30 @@
+import os
 from datetime import datetime,timedelta
 
 class Apache2(object):
 
-    def __init__(self, path = "/var/log/apache2/access.log"):
-        self.logPath = path
+    def __init__(self, options):
+        if not options: options = {}
+
+        if 'log_path' in options:
+            self.logPath = options['log_path']
+        else:
+            # No log path given, we test a couple sane defaults
+            # to see if we can handle this ourselves.
+            possible_paths = [
+                '/var/log/apache2/access.log',
+                '/var/log/apache2/access_log'
+            ]
+
+            for path in possible_paths:
+                if os.path.exists(path):
+                    print "Found an Apache2 log file in %s" % (path,) 
+                    self.logPath = path
 
     def report(self, interval=5):
         delta = timedelta(seconds = interval)
-        log = open(self.logPath, "r") #try catch?
+        log = open(self.logPath)
+
         currentDateTime = datetime.now()
         limiter = currentDateTime - delta
 
@@ -34,12 +51,13 @@ class Apache2(object):
         for line in log:
             requests += 1
             splitted = line.split('"')
+            print splitted
             ipDateMesh = splitted[0]
             getLinkMesh = splitted[1]
             code, size = splitted[2].split()
             if size != "-":
                 transfer += int(size)
-            fromLink = splitted[3] # it's optional!
+            #fromLink = splitted.get(3) # it's optional!
             splitted[4] # is always blank
             browser = splitted[5]
             ipDateMesh = ipDateMesh.replace("]","[")

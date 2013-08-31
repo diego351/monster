@@ -7,7 +7,7 @@ class Postgres(object):
         self.dbName = db
         self.connString = "host='localhost' dbname='%s' user='%s' password='%s'" %(self.dbName,username,password)
         self.conn = psycopg2.connect(self.connString)
-        self.cursor =self.conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+        self.conn.autocommit = True
         self.firstTime = True
         self.emptyDict = {
                             "returned": 0,
@@ -18,9 +18,10 @@ class Postgres(object):
                             }
 
     def getCurrentData(self):
+        cursor =self.conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
         select = "SELECT * FROM pg_stat_database WHERE datname = '%s'" % self.dbName
-        self.cursor.execute(select)
-        temp = self.cursor.fetchone()
+        cursor.execute(select)
+        temp = cursor.fetchone()
         return {
                 "returned": int(str(temp["tup_returned"])),
                 "fetched":  int(str(temp["tup_fetched"])),

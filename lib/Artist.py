@@ -55,7 +55,7 @@ class Artist(object):
 
     def start(self):
 
-        self.flask_ps = Process(target=self.app.run)
+        self.flask_ps = Process(target=self.app.run, kwargs={'host': '0.0.0.0'})
         self.flask_ps.start()
 
     def stop(self):

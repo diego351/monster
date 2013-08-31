@@ -22,11 +22,12 @@ class MemInfo:
                 cached = int(tmp[1])
                 continue
        
-        free += cached
+        
         used = total - free
-    
+        used -= cached
         return { 
                 "free": free >> 10,
                 "used": used >> 10,
                 "total": total >> 10,
+                "cached": cached >> 10,
         }

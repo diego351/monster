@@ -1,6 +1,6 @@
 from datetime import datetime,timedelta
 
-class Apache2(object):
+class Nginx(object):
 
     def __init__(self, path = "/var/log/nginx/access.log"):
         self.logPath = path

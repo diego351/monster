@@ -1,6 +1,6 @@
 class LoadAvg(object):
 
-    def __init__(self):
+    def __init__(self, probe_opts):
         pass
 
     def report(self):

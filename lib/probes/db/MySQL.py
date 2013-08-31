@@ -2,8 +2,8 @@ import MySQLdb
 
 class MySQL(object):
 
-    def __init__(self,username, password):
-        self.conn=MySQLdb.connect(host="localhost", user=username, passwd=password)
+    def __init__(self, parameters):
+        self.conn=MySQLdb.connect(host="localhost", user=parameters.get('username'), passwd=parameters.get('password'))
         self.cursor = self.conn.cursor()
         self.firstTime = True
         self.emptyDict = {

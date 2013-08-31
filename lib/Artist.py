@@ -50,6 +50,14 @@ class Artist(object):
                 'l': len(postgres_stats)
             })
 
+        @app.route('/api/mysql')
+        def api_mysql():
+            mysql_stats = app.diary.read('MySQL')
+            return jsonify({
+                'mysql_stats': mysql_stats,
+                'l': len(mysql_stats)
+            })
+
         # Assign to self, so other methods can interact with it.
         self.app = app
 

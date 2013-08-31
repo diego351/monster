@@ -205,6 +205,44 @@
         }
       });        
     }
+
+    
+    function drawMysqlColumns() {
+      $.ajax('/api/mysql', { dataType: 'json'}).done(function(response) {
+        var postgresTable = [];
+        postgresTable[0] = ['Index', 'Selects', 'Inserts', 'Updates', 'Deletes', 'Connections'];
+        for (var i = 0; i < response.l; i++) {
+          postgresEntry = [
+            i,
+            response.postgres_stats[i]['select'],
+            response.postgres_stats[i]['insert'],
+            response.postgres_stats[i]['update'],
+            response.postgres_stats[i]['delete'],
+            response.postgres_stats[i]['connections']
+          ];
+          console.log("postgresEntry " + i + ": " + postgresEntry);
+          postgresTable.push(postgresEntry);
+        }
+        var postgresData = new google.visualization.arrayToDataTable(postgresTable);
+        var options = { 
+          colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],
+          fontName: 'maven pro',
+          hAxis: {
+            gridlines: {
+              color: '#f6f6f6'
+            }
+          },
+          vAxis: {
+            gridlines:{color: '#f6f6f6'}}
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('mysql_columns'));
+        chart.draw(postgresData, options);
+
+        if (!mysql_refresh) {
+          mysql_refresh = setInterval(drawMysqlColumns, 3000);
+        }
+      });        
+    }
     
 
     google.load("visualization", "1", {packages:["corechart"]});
@@ -213,12 +251,14 @@
     google.setOnLoadCallback(getMemInfoAndPaintLayers);
     google.setOnLoadCallback(drawApacheColumns);
     google.setOnLoadCallback(drawPostgresColumns);
+    google.setOnLoadCallback(drawMysqlColumns);
 
     var refresh = false;
     var pie_refresh = false;
     var area_refresh = false;
     var apache_refresh = false;
     var postgres_refresh = false;
+    var mysql_refresh = false;
 
     </script>
 
@@ -233,25 +273,31 @@
 
     <div class="pure-g">
       <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">memory pie</h1></div>  
-      <div class="pure-u-2-3" id="memory_pie" style="height:360px;">
+      <div class="pure-u-2-3" id="memory_pie" style="height:360px;"></div>
       <div class="pure-u-1-6" style="height:360px;"></div> 
     </div>
 
     <div class="pure-g">
       <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">memory usage</h1></div>  
-      <div class="pure-u-2-3" id="memory_area" style="height:360px;">
+      <div class="pure-u-2-3" id="memory_area" style="height:360px;"></div>
       <div class="pure-u-1-6" style="height:360px;"></div> 
     </div>
 
     <div class="pure-g">
       <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">apache stats</h1></div>  
-      <div class="pure-u-2-3" id="apache_columns" style="height:360px;">
+      <div class="pure-u-2-3" id="apache_columns" style="height:360px;"></div>
       <div class="pure-u-1-6" style="height:360px;"></div> 
     </div>
 
     <div class="pure-g">
       <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">postgres stats</h1></div>  
-      <div class="pure-u-2-3" id="postgres_columns" style="height:360px;">
+      <div class="pure-u-2-3" id="postgres_columns" style="height:360px;"></div>
+      <div class="pure-u-1-6" style="height:360px;"></div> 
+    </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">mysql stats</h1></div>  
+      <div class="pure-u-2-3" id="mysql_columns" style="height:360px;"></div>
       <div class="pure-u-1-6" style="height:360px;"></div> 
     </div>
   </body>

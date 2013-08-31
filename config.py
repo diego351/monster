@@ -3,5 +3,6 @@
 #
 probes = [
     'osx.LoadAvg',
-    'osx.MemInfo'
+    'osx.MemInfo',
+    'Apache2',
 ]

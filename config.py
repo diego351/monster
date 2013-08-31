@@ -4,5 +4,5 @@
 probes = [
     'osx.LoadAvg',
     'osx.MemInfo',
-    'Apache2',
+    'httpd.Apache2',
 ]

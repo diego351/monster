@@ -26,7 +26,7 @@ class MemInfo:
         used = total - free
     
         return { 
-                "free": free,
-                "used": used,
-                "total": total,
+                "free": free >> 10,
+                "used": used >> 10,
+                "total": total >> 10,
         }

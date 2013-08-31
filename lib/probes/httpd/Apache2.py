@@ -14,23 +14,24 @@ class Apache2(object):
         retNone = {"transfer": 0,
                     "requests": 0,
                     }
-
         while True:
-            line = log.readline()
+            line = log.readline()[:-1]
+            #print "#" + line + "#"
             if line == "":
+                #print "just oldies here."
                 return retNone
             logLineDate = line.split('"')[0].replace("]","[").split("[")[1] # [*]
             logDateTime = datetime.strptime(logLineDate[0:-6], "%d/%b/%Y:%H:%M:%S") # [*] [*]
             if logDateTime < limiter:
                 continue
             else:
+                log.seek(-1*len(line)+1,1) # omitted one important line!
                 break
-        #so we ommited outdated log lines
-        if not log:
-            return retNone
+
 
         requests = 0
         transfer = 0
+        
         for line in log:
             requests += 1
             splitted = line.split('"')
@@ -39,9 +40,9 @@ class Apache2(object):
             code, size = splitted[2].split()
             if size != "-":
                 transfer += int(size)
-            fromLink = splitted[3] # it's optional!
-            splitted[4] # is always blank
-            browser = splitted[5]
+            #fromLink = splitted[3] # it's optional!
+            #splitted[4] # is always blank
+            #browser = splitted[5]
             ipDateMesh = ipDateMesh.replace("]","[")
             asdf = ipDateMesh.split("[")
             date = asdf[1]

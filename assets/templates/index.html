@@ -209,21 +209,21 @@
     
     function drawMysqlColumns() {
       $.ajax('/api/mysql', { dataType: 'json'}).done(function(response) {
-        var postgresTable = [];
-        postgresTable[0] = ['Index', 'Selects', 'Inserts', 'Updates', 'Deletes', 'Connections'];
+        var mysqlTable = [];
+        mysqlTable[0] = ['Index', 'Selects', 'Inserts', 'Updates', 'Deletes', 'Connections'];
         for (var i = 0; i < response.l; i++) {
-          postgresEntry = [
+          mysqlEntry = [
             i,
-            response.postgres_stats[i]['select'],
-            response.postgres_stats[i]['insert'],
-            response.postgres_stats[i]['update'],
-            response.postgres_stats[i]['delete'],
-            response.postgres_stats[i]['connections']
+            response.mysql_stats[i]['select'],
+            response.mysql_stats[i]['insert'],
+            response.mysql_stats[i]['update'],
+            response.mysql_stats[i]['delete'],
+            response.mysql_stats[i]['connections']
           ];
-          console.log("postgresEntry " + i + ": " + postgresEntry);
-          postgresTable.push(postgresEntry);
+          console.log("mysqlEntry " + i + ": " + mysqlEntry);
+          mysqlTable.push(mysqlEntry);
         }
-        var postgresData = new google.visualization.arrayToDataTable(postgresTable);
+        var mysqlData = new google.visualization.arrayToDataTable(mysqlTable);
         var options = { 
           colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],
           fontName: 'maven pro',
@@ -236,7 +236,7 @@
             gridlines:{color: '#f6f6f6'}}
         };
         var chart = new google.visualization.ColumnChart(document.getElementById('mysql_columns'));
-        chart.draw(postgresData, options);
+        chart.draw(mysqlData, options);
 
         if (!mysql_refresh) {
           mysql_refresh = setInterval(drawMysqlColumns, 3000);

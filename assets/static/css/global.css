@@ -1,0 +1,44 @@
+#monster-bar {
+    margin-bottom: 20px;
+    background-color: #f8f8f8;
+}
+
+#monster-bar > div {
+    display: inline-block;
+    min-height: 10px;
+} 
+
+.monster-name {
+    display: inline-block;
+    padding-left: 15px;
+    font-size: 28px;
+    font-family: 'Flavors';
+    color: #533b53;
+    width: 35%;
+    vertical-align: middle;
+}
+
+.monster-text {
+    display: inline-block;
+    font-size: 12px;
+    color: #b0b0b0;
+    font-family: "maven pro";
+    width: 45%;
+    vertical-align: middle;
+}
+
+.pinkish {
+    border-top: 3px solid #ff2d55;
+}
+
+.yellowish {
+    border-top: 3px solid #ffcc00;
+}
+
+.blueish {
+    border-top: 3px solid #5ac8fa;
+}
+
+.greenish {
+    border-top: 3px solid #4cd964;
+}

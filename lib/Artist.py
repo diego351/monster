@@ -11,7 +11,13 @@ class Artist(object):
 
         self.diary = diary
         
-        app = Flask(__name__, template_folder='../assets/templates')
+        app = Flask(
+            __name__,
+            template_folder='../assets/templates',
+            static_folder='../assets/static',
+            static_url_path=''
+        )
+
         app.diary = diary
 
         @app.route('/')

@@ -37,8 +37,21 @@
 
 .blueish {
     border-top: 3px solid #5ac8fa;
+    text-align: right;
 }
 
 .greenish {
     border-top: 3px solid #4cd964;
+}
+
+#logout-link {
+    color: #b0b0b0;
+    line-height: 36px;
+    padding-right: 15px;
+    font-size: 14px;
+    font-family: 'Maven Pro';
+}
+
+#logout-link:hover {
+    color: #4b4b4b;
 }

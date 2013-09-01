@@ -1,13 +1,16 @@
 from flask import Flask
 from flask import render_template
 from flask import jsonify
+from flask import session
+from flask import redirect
+from flask import request
 from multiprocessing import Process
 from time import sleep
 from time import time
 
 class Artist(object):
 
-    def __init__(self, diary):
+    def __init__(self, diary, config_opts):
 
         self.diary = diary
         
@@ -17,8 +20,17 @@ class Artist(object):
             static_folder='../assets/static',
             static_url_path=''
         )
-
         app.diary = diary
+        app.secret_key = "Alice touches herself."
+
+        if config_opts.has_option('overall', 'password'):
+            app.password = config_opts.get('overall', 'password')
+            @app.before_request
+            def check_auth():
+                if request.endpoint not in ('check_password', 'static'):
+                    if 'is_logged_in' not in session:
+                        return redirect('/password')
+                
 
         @app.route('/')
         def index():
@@ -63,6 +75,22 @@ class Artist(object):
                 'mysql_stats': mysql_stats,
                 'l': len(mysql_stats)
             })
+
+        @app.route('/password', methods=['GET', 'POST'])
+        def check_password():
+            if request.method == 'POST':
+                if request.form['password'] == app.password:
+                    session['is_logged_in'] = 'uh-uh!' 
+                    return redirect('/')
+                else:
+                    return render_template('password.html', message="Nope, that's not it.")
+            else:
+                return render_template('password.html')
+
+        @app.route('/logout')
+        def logout():
+            session.clear()
+            return redirect('/password')
 
         # Assign to self, so other methods can interact with it.
         self.app = app

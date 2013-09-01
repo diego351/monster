@@ -1,0 +1,23 @@
+#login_form {
+    text-align: center;
+    margin-top: 90px;
+}
+
+#login_form > label {
+    display: block;
+    font-family: 'Maven Pro';
+    text-align: left;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+#login_form > input[type=password] {
+    width: 100%;
+    font-size: 48px;
+    padding: 10px;
+    text-align: center;
+}
+
+#login_form > input[type=password]:focus {
+    outline: none;
+}

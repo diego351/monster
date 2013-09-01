@@ -28,7 +28,7 @@ try:
     foreman.load_probes(config)
     foreman.start()
 
-    artist = Artist(diary)
+    artist = Artist(diary, config)
     artist.start()
 
     print "[-] We're PID %s." % (os.getpid(),)

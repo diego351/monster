@@ -265,7 +265,7 @@
     {% if 'Nginx' in enabled_probes %}
     function drawNginxColumns() {
       console.log('nginx drawing columns');
-      $.ajax('/api/nginx', { dataType: 'json'}).done(function(response) {
+      $.ajax('/api/nginx/30', { dataType: 'json'}).done(function(response) {
         var nginxTable = [];
         nginxTable[0] = ['Index', 'Requests', 'Transfer'];
         for (var i = 0; i < response.l; i++) {

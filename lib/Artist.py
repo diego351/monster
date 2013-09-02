@@ -81,9 +81,9 @@ class Artist(object):
                 'l': len(mysql_stats)
             })
 
-        @app.route('/api/nginx')
-        def api_nginx():
-            nginx_stats = app.diary.read('Nginx')
+        @app.route('/api/nginx/<int:how_many>')
+        def api_nginx(how_many=30):
+            nginx_stats = app.diary.read('Nginx', how_many)
             return jsonify({
                 'nginx_stats': nginx_stats,
                 'l': len(nginx_stats)

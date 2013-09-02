@@ -37,8 +37,6 @@ class Foreman(object):
                 cprint("[x] Looks like you lack some prerequisites to run %s:" % (probe,), "yellow")
                 print str(e)
 
-        print self.probes
-
     def start(self):
         print "[&] Foreman.start() in %s." % (os.getpid(),)
         self.worker_ps = Process(target=self.run)
@@ -59,6 +57,5 @@ class Foreman(object):
         probe_time = int(time.time())
         # Note: remember about .iter() vs .iteritems()
         for probe_name, probe_obj in self.probes.iteritems():
-            print probe_name, probe_obj
             # Signature follows .write("MemInfo", MemInfo.report())
             self.diary.write(probe_name, probe_obj.report())

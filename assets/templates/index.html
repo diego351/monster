@@ -151,6 +151,7 @@
       }); 
     }
 
+    {% if 'Apache' in enabled_probes %}
     function drawApacheColumns() {
       $.ajax('/api/apache', { dataType: 'json'}).done(function(response) {
         var apacheTable = [];
@@ -183,8 +184,9 @@
         }
       });        
     }
+    {% endif %}
     
-    
+    {% if 'Postgres' in enabled_probes %}
     function drawPostgresColumns() {
       $.ajax('/api/postgres/10', { dataType: 'json'}).done(function(response) {
         var postgresTable = [];
@@ -220,8 +222,9 @@
         }
       });        
     }
+    {% endif %}
 
-    
+    {% if 'Mysql' in enabled_probes %} 
     function drawMysqlColumns() {
       $.ajax('/api/mysql', { dataType: 'json'}).done(function(response) {
         var mysqlTable = [];
@@ -257,7 +260,9 @@
         }
       });        
     }
+    {% endif %}
     
+    {% if 'Nginx' in enabled_probes %}
     function drawNginxColumns() {
       $.ajax('/api/nginx', { dataType: 'json'}).done(function(response) {
         var nginxTable = [];
@@ -287,10 +292,11 @@
         chart.draw(nginxData, options);
 
         if (!nginx_refresh) {
-          nginx_refresh = setInterval(drawApacheColumns, 3000);
+          nginx_refresh = setInterval(drawNginxColumns, 3000);
         }
       });        
     }
+    {% endif %}
 
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(getLoadAndPaintShit);

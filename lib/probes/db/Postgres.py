@@ -5,7 +5,7 @@ class Postgres(object):
             import psycopg2
             import psycopg2.extras
             self.pg = psycopg2
-            self.pg.extras = psycopg.extras
+            self.pg.extras = psycopg2.extras
         except ImportError:
             raise Exception("Psycopg missing, but postgres probe selected..")
 

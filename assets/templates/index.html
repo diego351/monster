@@ -154,7 +154,7 @@
       }); 
     }
 
-    {% if 'Apache' in enabled_probes %}
+    {% if 'Apache2' in enabled_probes %}
     function drawApacheColumns() {
       $.ajax('/api/apache', { dataType: 'json'}).done(function(response) {
         var apacheTable = [];
@@ -326,7 +326,7 @@ vAxes: [
     google.setOnLoadCallback(getLoadAndPaintShit);
     google.setOnLoadCallback(getMemInfoAndBakePie);
     google.setOnLoadCallback(getMemInfoAndPaintLayers);
-{% if 'Apache' in enabled_probes %}
+{% if 'Apache2' in enabled_probes %}
     google.setOnLoadCallback(drawApacheColumns);
 {% endif %}
 {% if 'Postgres' in enabled_probes %}
@@ -386,7 +386,7 @@ vAxes: [
     </div>
     {% endif %}
 
-    {% if 'Apache' in enabled_probes %}
+    {% if 'Apache2' in enabled_probes %}
     <div class="pure-g">
       <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">apache stats</h1></div>  
       <div class="pure-u-2-3" id="apache_columns" style="height:360px;"></div>

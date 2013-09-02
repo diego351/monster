@@ -73,10 +73,18 @@
         console.log(response);
         var memTable = [];
         memTable[0] = ['Type', 'MB'];
-        memTable[1] = ['Free', response.mem_info[response.l - 1]['free']];
-        memTable[2] = ['Active', response.mem_info[response.l - 1]['active']]; 
-        memTable[3] = ['Inactive', response.mem_info[response.l - 1]['inactive']]; 
-        memTable[4] = ['Wired', response.mem_info[response.l - 1]['wired']]; 
+        if (response.mem_info[0].hasOwnProperty('cached')) {
+          /* Linux. */
+          memTable[1] = ['Free', response.mem_info[response.l - 1]['free']];
+          memTable[2] = ['Used', response.mem_info[response.l - 1]['used']]; 
+          memTable[3] = ['Cached', response.mem_info[response.l - 1]['cached']]; 
+        } else {
+          /* OSX */
+          memTable[1] = ['Free', response.mem_info[response.l - 1]['free']];
+          memTable[2] = ['Active', response.mem_info[response.l - 1]['active']]; 
+          memTable[3] = ['Inactive', response.mem_info[response.l - 1]['inactive']]; 
+          memTable[4] = ['Wired', response.mem_info[response.l - 1]['wired']]; 
+        }
         var pieData = google.visualization.arrayToDataTable(memTable);
         var options = {
           colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],

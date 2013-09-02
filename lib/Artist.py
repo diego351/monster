@@ -76,6 +76,14 @@ class Artist(object):
                 'l': len(mysql_stats)
             })
 
+        @app.route('/api/nginx')
+        def api_nginx():
+            nginx_stats = app.diary.read('Nginx')
+            return jsonify({
+                'nginx_stats': nginx_stats,
+                'l': len(nginx_stats)
+            })
+
         @app.route('/password', methods=['GET', 'POST'])
         def check_password():
             if request.method == 'POST':

@@ -262,6 +262,39 @@
       });        
     }
     
+    function drawNginxColumns() {
+      $.ajax('/api/nginx', { dataType: 'json'}).done(function(response) {
+        var nginxTable = [];
+        nginxTable[0] = ['Index', 'Requests', 'Transfer'];
+        for (var i = 0; i < response.l; i++) {
+          nginxEntry = [
+            i,
+            response.nginx_activity[i]['requests'],
+            response.nginx_activity[i]['transfer']
+          ];
+          console.log("nginxEntry " + i + ": " + nginxEntry);
+          nginxTable.push(nginxEntry);
+        }
+        var nginxData = new google.visualization.arrayToDataTable(nginxTable);
+        var options = { 
+          colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],
+          fontName: 'maven pro',
+          hAxis: {
+            gridlines: {
+              color: '#f6f6f6'
+            }
+          },
+          vAxis: {
+            gridlines:{color: '#f6f6f6'}}
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('nginx_columns'));
+        chart.draw(nginxData, options);
+
+        if (!nginx_refresh) {
+          nginx_refresh = setInterval(drawApacheColumns, 3000);
+        }
+      });        
+    }
 
     google.load("visualization", "1", {packages:["corechart"]});
     google.setOnLoadCallback(getLoadAndPaintShit);
@@ -269,7 +302,7 @@
     google.setOnLoadCallback(getMemInfoAndPaintLayers);
     google.setOnLoadCallback(drawApacheColumns);
     google.setOnLoadCallback(drawPostgresColumns);
-    google.setOnLoadCallback(drawMysqlColumns);
+    google.setOnLoadCallback(drawNginxColumns);
 
     var refresh = false;
     var pie_refresh = false;
@@ -277,6 +310,7 @@
     var apache_refresh = false;
     var postgres_refresh = false;
     var mysql_refresh = false;
+    var nginx_refresh = false;
 
     </script>
 

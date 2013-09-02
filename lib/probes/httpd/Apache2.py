@@ -20,6 +20,7 @@ class Apache2(object):
                 if os.path.exists(path):
                     print "Found an Apache2 log file in %s" % (path,) 
                     self.logPath = path
+
         self.lastSize = 0
         self.retNone = {"transfer": 0,
                         "requests": 0,

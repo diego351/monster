@@ -271,8 +271,8 @@
         for (var i = 0; i < response.l; i++) {
           nginxEntry = [
             i,
-            response.nginx_activity[i]['requests'],
-            response.nginx_activity[i]['transfer']
+            response.nginx_stats[i]['requests'],
+            response.nginx_stats[i]['transfer']
           ];
           console.log("nginxEntry " + i + ": " + nginxEntry);
           nginxTable.push(nginxEntry);

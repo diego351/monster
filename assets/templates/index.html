@@ -8,144 +8,23 @@
     <link href='http://fonts.googleapis.com/css?family=Flavors' rel='stylesheet' type='text/css'>
     <link href="css/regular/style.css" rel="stylesheet" type="text/css">
     <link href="css/global.css" rel="stylesheet" type="text/css">
+
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-    
+
     {% if 'LoadAvg' in enabled_probes %}
-    function getLoadAndPaintShit() {
-      $.ajax('/api/load/30', { dataType: 'json' }).done(function(response) {
-        var loadTable = [];   
-        loadTable[0] = ['Index', '1m', '5m', '15m'];
-        for (var i = 0; i < response.l; i++) {
-          loadEntry = [
-            i,
-            response.load[i]['1min'],
-            response.load[i]['5min'],
-            response.load[i]['15min']
-          ];
-
-          loadTable.push(loadEntry);
-        }
-
-        var options = {
-          curveType: 'function',
-          fontName: 'maven pro',
-          vAxis: {
-            maxValue: 3.0,
-            minValue: 0.0,
-            viewWindow: {
-              min: 0.0
-            },
-            gridlines: {
-              count: 16,
-              color: '#f6f6f6'
-            }
-          },
-          hAxis: {
-            gridlines: {
-              color: '#f6f6f6'
-                       },
-viewWindow: {
-min:0,
-    max:29},
-          },
-                 direction: -1,
-          colors: ['#ff2d55', '#5ac8fa', '#4cd964']
-        };
-        var chartData = google.visualization.arrayToDataTable(loadTable);
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(chartData, options);
-
-        if (!refresh) {
-          refresh = setInterval(getLoadAndPaintShit, 2000);
-        }
-        
-      });
-    };
+    <script type="text/javascript" src="js/regular/load-chart.js"></script>
+    {% endif %}
+  
+    {% if 'MemInfo' in enabled_probes %}
+    <script type="text/javascript" src="js/regular/meminfo-charts.js"></script>
     {% endif %}
 
-    function getMemInfoAndBakePie() {
-      $.ajax('/api/mem_info/1', { dataType: 'json' }).done(function(response) {
-        var memTable = [];
-        memTable[0] = ['Type', 'MB'];
-        if (response.mem_info[0].hasOwnProperty('cached')) {
-          /* Linux. */
-          memTable[1] = ['Free', response.mem_info[0]['free']];
-          memTable[2] = ['Used', response.mem_info[0]['used']]; 
-          memTable[3] = ['Cached', response.mem_info[0]['cached']]; 
-        } else {
-          /* OSX */
-          memTable[1] = ['Free', response.mem_info[0]['free']];
-          memTable[2] = ['Active', response.mem_info[0]['active']]; 
-          memTable[3] = ['Inactive', response.mem_info[0]['inactive']]; 
-          memTable[4] = ['Wired', response.mem_info[0]['wired']]; 
-        }
-        var pieData = google.visualization.arrayToDataTable(memTable);
-        var options = {
-          colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],
-          pieSliceText: 'value',
-          fontName: 'maven pro'
-        };
-        var chart = new google.visualization.PieChart(document.getElementById('memory_pie'));
-        chart.draw(pieData, options);
-        
-        if (!pie_refresh) {
-          pie_refresh = setInterval(getMemInfoAndBakePie, 3000); 
-        }
-      }); 
-    }
+    {% if 'Apache2' in enabled_probes %}
 
-    function getMemInfoAndPaintLayers() {
-      $.ajax('/api/mem_info/30', { dataType: 'json' }).done(function(response) {
-        var memTable = [];
-        if (response.mem_info[0].hasOwnProperty('cached')) {
-          memTable[0] = ['Index', 'Used', 'Cached', 'Free'];
-          for (var i = 0; i < response.l; i++) {
-            memEntry = [
-              i,
-              response.mem_info[i]['used'],
-              response.mem_info[i]['cached'],
-              response.mem_info[i]['free']
-            ];
-            memTable.push(memEntry);
-          }
-        } else {
-          memTable[0] = ['Index', 'Wired', 'Active', 'Inactive', 'Free'];
-          for (var i = 0; i < response.l; i++) {
-            memEntry = [
-              i,
-              response.mem_info[i]['wired'],
-              response.mem_info[i]['active'],
-              response.mem_info[i]['inactive'],
-              response.mem_info[i]['free']
-            ];
-            memTable.push(memEntry);
-          }
-        }
-        var areaData = new google.visualization.arrayToDataTable(memTable);
-        var options = {
-          colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],
-          isStacked: true,
-          areaOpacity: 0.8,
-          fontName: 'maven pro',
-          hAxis: {
-            gridlines: {
-              color: '#f6f6f6'
-            }
-          },
-          vAxis: {
-            gridlines:{color: '#f6f6f6'}}
-        };
-        var chart = new google.visualization.AreaChart(document.getElementById('memory_area'));
-        chart.draw(areaData, options);
-
-        if (!area_refresh) {
-          area_refresh = setInterval(getMemInfoAndPaintLayers, 3000);
-        }
-      }); 
-    }
-
+    {% endif %}
+    
+    <script type="text/javascript">
     {% if 'Apache2' in enabled_probes %}
     function drawApacheColumns() {
       $.ajax('/api/apache', { dataType: 'json'}).done(function(response) {

@@ -13,10 +13,7 @@ class Diary(object):
     def read(self, probe_name, how_many=50):
         try:
             series = self.database[probe_name][-how_many:]
-            if len(series) < how_many:
-                return [{} for i in xrange(how_many - len(series))] + (series)
-            else:
-                return series
+            return series
 
         except KeyError:
             return None

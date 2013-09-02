@@ -4,6 +4,8 @@ class Postgres(object):
         try:
             import psycopg2
             import psycopg2.extras
+            self.pg = psycopg2
+            self.pg.extras = psycopg.extras
         except ImportError:
             raise Exception("Psycopg missing, but postgres probe selected..")
 
@@ -15,7 +17,7 @@ class Postgres(object):
                                                                                     self.username,
                                                                                     self.password)
 
-        self.conn = psycopg2.connect(self.connString)
+        self.conn = pg.connect(self.connString)
         self.conn.autocommit = True
         self.firstTime = True
         self.emptyDict = {
@@ -27,7 +29,7 @@ class Postgres(object):
                             }
 
     def getCurrentData(self):
-        cursor = self.conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor = self.conn.cursor(cursor_factory=pg.extras.RealDictCursor)
         select = "SELECT * FROM pg_stat_database WHERE datname = '%s'" % self.database
         cursor.execute(select)
         temp = cursor.fetchone()

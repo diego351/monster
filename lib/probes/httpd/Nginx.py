@@ -2,8 +2,19 @@ from datetime import datetime,timedelta
 
 class Nginx(object):
 
-    def __init__(self, path = "/var/log/nginx/access.log"):
-        self.logPath = path
+    def __init__(self, options):
+        if not options: options = {}
+        if 'log_path' in options:
+            self.logPath = options['log_path']
+        else:
+            possible_paths = [
+                '/var/log/nginx/access.log'
+            ]
+
+            for path in possible_paths:
+                if os.path.exists(path):
+                    print "Found an nginx log file in %s." % (path,)
+                    self.logPath = path
 
     def report(self, interval=5):
         delta = timedelta(seconds = interval)

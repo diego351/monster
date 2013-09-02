@@ -104,17 +104,30 @@
     function getMemInfoAndPaintLayers() {
       $.ajax('/api/mem_info', { dataType: 'json' }).done(function(response) {
         var memTable = [];
-        memTable[0] = ['Index', 'Wired', 'Active', 'Inactive', 'Free'];
-        for (var i = 0; i < response.l; i++) {
-          memEntry = [
-            i,
-            response.mem_info[i]['wired'],
-            response.mem_info[i]['active'],
-            response.mem_info[i]['inactive'],
-            response.mem_info[i]['free']
-          ];
-          console.log("memEntry " + i + ": " + memEntry);
-          memTable.push(memEntry);
+        if (response.mem_info[0].hasOwnProperty('cached')) {
+          memTable[0] = ['Index', 'Used', 'Cached', 'Free'];
+          for (var i = 0; i < response.l; i++) {
+            memEntry = [
+              i,
+              response.mem_info[i]['used'],
+              response.mem_info[i]['cached'],
+              response.mem_info[i]['free']
+            ];
+            memTable.push(memEntry);
+          }
+        } else {
+          memTable[0] = ['Index', 'Wired', 'Active', 'Inactive', 'Free'];
+          for (var i = 0; i < response.l; i++) {
+            memEntry = [
+              i,
+              response.mem_info[i]['wired'],
+              response.mem_info[i]['active'],
+              response.mem_info[i]['inactive'],
+              response.mem_info[i]['free']
+            ];
+            console.log("memEntry " + i + ": " + memEntry);
+            memTable.push(memEntry);
+          }
         }
         var areaData = new google.visualization.arrayToDataTable(memTable);
         var options = {

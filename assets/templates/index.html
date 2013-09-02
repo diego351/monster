@@ -302,9 +302,18 @@
     google.setOnLoadCallback(getLoadAndPaintShit);
     google.setOnLoadCallback(getMemInfoAndBakePie);
     google.setOnLoadCallback(getMemInfoAndPaintLayers);
+{% if 'Apache' in enabled_probes %}
     google.setOnLoadCallback(drawApacheColumns);
+{% endif %}
+{% if 'Postgres' in enabled_probes %}
     google.setOnLoadCallback(drawPostgresColumns);
+{% endif %}
+    {% if 'Nginx' in enabled_probes %}
     google.setOnLoadCallback(drawNginxColumns);
+    {% endif %}
+{% if 'Mysql' in enabled_probes %}
+    google.setOnLoadCallback(drawMysqlColumns);
+{% endif %}
 
     var refresh = false;
     var pie_refresh = false;

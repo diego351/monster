@@ -1,17 +1,27 @@
-import MySQLdb
-
 class MySQL(object):
 
     def __init__(self, parameters):
+        # Let's see if MySQLdb is present. 
+        # If not, we raise an exception with a slightly more
+        # helpful message that the default ImportError
+        try:
+            import MySQLdb
+        except ImportError:
+            raise Exception(
+                "You tried to load the MySQL probe, but the MySQLdb module\n"
+                "does not seem to be present. Try installing with pip mysql-python\n"
+                "(you may need a mysql-dev package on your system for that, by the way)\n"
+                )
+
         self.conn=MySQLdb.connect(host="localhost", user=parameters.get('username'), passwd=parameters.get('password'))
         self.cursor = self.conn.cursor()
         self.firstTime = True
         self.emptyDict = {
-        "delete": 0,
-        "select": 0,
-        "insert": 0,
-        "update": 0,
-        "connections": 0,
+            "delete": 0,
+            "select": 0,
+            "insert": 0,
+            "update": 0,
+            "connections": 0,
         }
 
 

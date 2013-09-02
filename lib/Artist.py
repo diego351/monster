@@ -60,9 +60,9 @@ class Artist(object):
                 'l': len(apache_activity),
             })
 
-        @app.route('/api/postgres')
-        def api_postgres():
-            postgres_stats = app.diary.read('Postgres')
+        @app.route('/api/postgres/<int:how_many>')
+        def api_postgres(how_many=30):
+            postgres_stats = app.diary.read('Postgres', how_many)
             return jsonify({
                 'postgres_stats': postgres_stats,
                 'l': len(postgres_stats)

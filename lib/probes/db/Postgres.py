@@ -1,9 +1,12 @@
-import psycopg2
-import psycopg2.extras
-
-
 class Postgres(object):
     def __init__(self, parameters):
+
+        try:
+            import psycopg2
+            import psycopg2.extras
+        except ImportError:
+            raise Exception("Psycopg missing, but postgres probe selected..")
+
         self.database = parameters.get('database')
         self.username = parameters.get('username')
         self.password = parameters.get('password')

@@ -167,7 +167,7 @@
     
     
     function drawPostgresColumns() {
-      $.ajax('/api/postgres', { dataType: 'json'}).done(function(response) {
+      $.ajax('/api/postgres/10', { dataType: 'json'}).done(function(response) {
         var postgresTable = [];
         postgresTable[0] = ['Index', 'Returned', 'Fetched', 'Inserts', 'Updates', 'Deletes'];
         for (var i = 0; i < response.l; i++) {

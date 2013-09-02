@@ -14,7 +14,6 @@
     
     function getLoadAndPaintShit() {
       $.ajax('/api/load', { dataType: 'json' }).done(function(response) {
-        console.log(response);
         var loadTable = [];   
         loadTable[0] = ['Index', '1m', '5m', '15m'];
         if (response.l < 50) {
@@ -70,7 +69,6 @@
 
     function getMemInfoAndBakePie() {
       $.ajax('/api/mem_info', { dataType: 'json' }).done(function(response) {
-        console.log(response);
         var memTable = [];
         memTable[0] = ['Type', 'MB'];
         if (response.mem_info[0].hasOwnProperty('cached')) {
@@ -125,7 +123,6 @@
               response.mem_info[i]['inactive'],
               response.mem_info[i]['free']
             ];
-            console.log("memEntry " + i + ": " + memEntry);
             memTable.push(memEntry);
           }
         }
@@ -162,7 +159,6 @@
             response.apache_activity[i]['requests'],
             response.apache_activity[i]['transfer']
           ];
-          console.log("apacheEntry " + i + ": " + apacheEntry);
           apacheTable.push(apacheEntry);
         }
         var apacheData = new google.visualization.arrayToDataTable(apacheTable);
@@ -200,7 +196,6 @@
             response.postgres_stats[i]['updated'],
             response.postgres_stats[i]['deleted']
           ];
-          console.log("postgresEntry " + i + ": " + postgresEntry);
           postgresTable.push(postgresEntry);
         }
         var postgresData = new google.visualization.arrayToDataTable(postgresTable);
@@ -238,7 +233,6 @@
             response.mysql_stats[i]['delete'],
             response.mysql_stats[i]['connections']
           ];
-          console.log("mysqlEntry " + i + ": " + mysqlEntry);
           mysqlTable.push(mysqlEntry);
         }
         var mysqlData = new google.visualization.arrayToDataTable(mysqlTable);

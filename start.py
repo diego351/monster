@@ -4,6 +4,7 @@ import ConfigParser
 import os
 import signal
 import sys
+from termcolor import cprint 
 
 sys.path.append('lib')
 
@@ -31,8 +32,8 @@ try:
     artist = Artist(diary, config)
     artist.start()
 
-    print "[-] We're PID %s." % (os.getpid(),)
-    print "[-] All done, running. Ctrl-C to exit."
+    cprint("[-] We're PID %s." % (os.getpid(),), "cyan")
+    cprint("[-] All done, running. Ctrl-C to exit.", "magenta")
     signal.pause()
 
 except KeyboardInterrupt:
@@ -41,5 +42,5 @@ except KeyboardInterrupt:
     artist.stop()
     foreman.stop()
 
-    print "[*] Exiting cleanly... was it good for you?"
+    cprint("[*] Exiting cleanly... was it good for you?", "magenta")
     exit()

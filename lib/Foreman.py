@@ -2,6 +2,8 @@ import time
 import os
 import sys
 from multiprocessing import Process
+from termcolor import cprint
+
 from probes.osx import MemInfo
 from probes.osx import LoadAvg
 
@@ -31,7 +33,8 @@ class Foreman(object):
                 self.probes[stat_name] = klass(probe_opts)
                 print "[*] %s loaded and ready." % (probe,)
             except Exception as e:
-                print "[x] Looks like you lack some prerequisites to run %s:" % (probe,)
+
+                cprint("[x] Looks like you lack some prerequisites to run %s:" % (probe,), "yellow")
                 print str(e)
 
         print self.probes

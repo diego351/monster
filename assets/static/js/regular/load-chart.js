@@ -2,7 +2,7 @@ function getLoadAndPaintShit() {
   $.ajax('/api/load/30', { dataType: 'json' }).done(function(response) {
     var loadTable = [];   
     loadTable[0] = ['Index', '1m', '5m', '15m'];
-    for (var i = 0; i < response.l; i++) {
+    for (var i = 0; i < response.load.length; i++) {
       loadEntry = [
         i,
         response.load[i]['1min'],

@@ -3,7 +3,7 @@ function drawNginxColumns() {
   $.ajax('/api/nginx/30', { dataType: 'json'}).done(function(response) {
     var nginxTable = [];
     nginxTable[0] = ['Index', 'Requests', 'Transfer'];
-    for (var i = 0; i < response.l; i++) {
+    for (var i = 0; i < response.nginx_stats.length; i++) {
       nginxEntry = [
         i,
         response.nginx_stats[i]['requests'],

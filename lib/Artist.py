@@ -52,7 +52,6 @@ class Artist(object):
             load_record = app.diary.read('LoadAvg', how_many)
             return jsonify({
                 'load': load_record, 
-                'l': len(load_record) 
             })
 
         @app.route('/api/mem_info/<int:how_many>')
@@ -60,7 +59,6 @@ class Artist(object):
             mem_info_record = app.diary.read('MemInfo', how_many)
             return jsonify({
                 'mem_info': mem_info_record,
-                'l': len(mem_info_record)
             })
 
         @app.route('/api/apache')
@@ -68,7 +66,6 @@ class Artist(object):
             apache_activity = app.diary.read('Apache2')
             return jsonify({
                 'apache_activity': apache_activity,
-                'l': len(apache_activity),
             })
 
         @app.route('/api/postgres/<int:how_many>')
@@ -76,7 +73,6 @@ class Artist(object):
             postgres_stats = app.diary.read('Postgres', how_many)
             return jsonify({
                 'postgres_stats': postgres_stats,
-                'l': len(postgres_stats)
             })
 
         @app.route('/api/mysql')
@@ -84,7 +80,6 @@ class Artist(object):
             mysql_stats = app.diary.read('MySQL')
             return jsonify({
                 'mysql_stats': mysql_stats,
-                'l': len(mysql_stats)
             })
 
         @app.route('/api/nginx/<int:how_many>')
@@ -92,7 +87,6 @@ class Artist(object):
             nginx_stats = app.diary.read('Nginx', how_many)
             return jsonify({
                 'nginx_stats': nginx_stats,
-                'l': len(nginx_stats)
             })
 
         @app.route('/password', methods=['GET', 'POST'])

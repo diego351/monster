@@ -2,7 +2,7 @@ function drawApacheColumns() {
   $.ajax('/api/apache', { dataType: 'json'}).done(function(response) {
     var apacheTable = [];
     apacheTable[0] = ['Index', 'Requests', 'Transfer'];
-    for (var i = 0; i < response.l; i++) {
+    for (var i = 0; i < response.apache_activity.length; i++) {
       apacheEntry = [
         i,
         response.apache_activity[i]['requests'],

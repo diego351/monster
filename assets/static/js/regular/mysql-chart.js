@@ -2,7 +2,7 @@ function drawMysqlColumns() {
   $.ajax('/api/mysql', { dataType: 'json'}).done(function(response) {
     var mysqlTable = [];
     mysqlTable[0] = ['Index', 'Selects', 'Inserts', 'Updates', 'Deletes', 'Connections'];
-    for (var i = 0; i < response.l; i++) {
+    for (var i = 0; i < response.mysql_stats.length; i++) {
       mysqlEntry = [
         i,
         response.mysql_stats[i]['select'],

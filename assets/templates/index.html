@@ -32,7 +32,7 @@
     <script type="text/javascript" src="js/regular/apache-chart.js"></script>
     {% endif %}
 
-    {% if 'Mysql' in enabled_probes %} 
+    {% if 'MySQL' in enabled_probes %} 
     <script type="text/javascript" src="js/regular/mysql-chart.js"></script>
     {% endif %}
 
@@ -55,7 +55,7 @@
     {% if 'Nginx' in enabled_probes %}
     google.setOnLoadCallback(drawNginxColumns);
     {% endif %}
-    {% if 'Mysql' in enabled_probes %}
+    {% if 'MySQL' in enabled_probes %}
     google.setOnLoadCallback(drawMysqlColumns);
     {% endif %}
 

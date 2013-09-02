@@ -34,7 +34,7 @@ function getMemInfoAndPaintLayers() {
     var memTable = [];
     if (response.mem_info[0].hasOwnProperty('cached')) {
       memTable[0] = ['Index', 'Used', 'Cached', 'Free'];
-      for (var i = 0; i < response.l; i++) {
+      for (var i = 0; i < response.mem_info.length; i++) {
         memEntry = [
           i,
           response.mem_info[i]['used'],
@@ -45,7 +45,7 @@ function getMemInfoAndPaintLayers() {
       }
     } else {
       memTable[0] = ['Index', 'Wired', 'Active', 'Inactive', 'Free'];
-      for (var i = 0; i < response.l; i++) {
+      for (var i = 0; i < response.mem_info.length; i++) {
         memEntry = [
           i,
           response.mem_info[i]['wired'],

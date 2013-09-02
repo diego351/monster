@@ -30,6 +30,8 @@ class Artist(object):
                 if request.endpoint not in ('check_password', 'static'):
                     if 'is_logged_in' not in session:
                         return redirect('/password')
+        else:
+            app.password = None
         
         app.enabled_probes = config_opts.options('probes')
         # I can split too!
@@ -39,7 +41,11 @@ class Artist(object):
 
         @app.route('/')
         def index():
-            return render_template('index.html', enabled_probes=app.enabled_probes)
+            return render_template(
+                'index.html',
+                enabled_probes=app.enabled_probes,
+                password=app.password
+            )
 
         @app.route('/api/load')
         def api_load():

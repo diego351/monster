@@ -11,7 +11,10 @@ class Diary(object):
             self.database[probe_name] = [value]
 
     def read(self, probe_name, how_many=50):
-        return self.database[probe_name][-how_many:]
+        try:
+            return self.database[probe_name][-how_many:]
+        except KeyError:
+            return None
 
 
 class DiaryManager(BaseManager):

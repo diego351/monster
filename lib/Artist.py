@@ -47,17 +47,17 @@ class Artist(object):
                 password=app.password
             )
 
-        @app.route('/api/load')
-        def api_load():
-            load_record = app.diary.read('LoadAvg')
+        @app.route('/api/load/<int:how_many>')
+        def api_load(how_many=40):
+            load_record = app.diary.read('LoadAvg', how_many)
             return jsonify({
                 'load': load_record, 
                 'l': len(load_record) 
             })
 
-        @app.route('/api/mem_info')
-        def api_mem_info():
-            mem_info_record = app.diary.read('MemInfo')
+        @app.route('/api/mem_info/<int:how_many>')
+        def api_mem_info(how_many=40):
+            mem_info_record = app.diary.read('MemInfo', how_many)
             return jsonify({
                 'mem_info': mem_info_record,
                 'l': len(mem_info_record)

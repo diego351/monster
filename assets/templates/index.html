@@ -14,23 +14,12 @@
     
     {% if 'LoadAvg' in enabled_probes %}
     function getLoadAndPaintShit() {
-      $.ajax('/api/load', { dataType: 'json' }).done(function(response) {
+      $.ajax('/api/load/30', { dataType: 'json' }).done(function(response) {
         var loadTable = [];   
         loadTable[0] = ['Index', '1m', '5m', '15m'];
-        if (response.l < 50) {
-          for (var i = 0; i < 50 - response.l; i++) {
-            loadEntry = [
-              i,
-              0.0,
-              0.0,
-              0.0
-            ]
-            loadTable.push(loadEntry);
-          }
-        }
         for (var i = 0; i < response.l; i++) {
           loadEntry = [
-            i + (50 - response.l),
+            i,
             response.load[i]['1min'],
             response.load[i]['5min'],
             response.load[i]['15min']
@@ -73,20 +62,20 @@
     {% endif %}
 
     function getMemInfoAndBakePie() {
-      $.ajax('/api/mem_info', { dataType: 'json' }).done(function(response) {
+      $.ajax('/api/mem_info/1', { dataType: 'json' }).done(function(response) {
         var memTable = [];
         memTable[0] = ['Type', 'MB'];
         if (response.mem_info[0].hasOwnProperty('cached')) {
           /* Linux. */
-          memTable[1] = ['Free', response.mem_info[response.l - 1]['free']];
-          memTable[2] = ['Used', response.mem_info[response.l - 1]['used']]; 
-          memTable[3] = ['Cached', response.mem_info[response.l - 1]['cached']]; 
+          memTable[1] = ['Free', response.mem_info[0]['free']];
+          memTable[2] = ['Used', response.mem_info[0]['used']]; 
+          memTable[3] = ['Cached', response.mem_info[0]['cached']]; 
         } else {
           /* OSX */
-          memTable[1] = ['Free', response.mem_info[response.l - 1]['free']];
-          memTable[2] = ['Active', response.mem_info[response.l - 1]['active']]; 
-          memTable[3] = ['Inactive', response.mem_info[response.l - 1]['inactive']]; 
-          memTable[4] = ['Wired', response.mem_info[response.l - 1]['wired']]; 
+          memTable[1] = ['Free', response.mem_info[0]['free']];
+          memTable[2] = ['Active', response.mem_info[0]['active']]; 
+          memTable[3] = ['Inactive', response.mem_info[0]['inactive']]; 
+          memTable[4] = ['Wired', response.mem_info[0]['wired']]; 
         }
         var pieData = google.visualization.arrayToDataTable(memTable);
         var options = {
@@ -100,12 +89,11 @@
         if (!pie_refresh) {
           pie_refresh = setInterval(getMemInfoAndBakePie, 3000); 
         }
-
       }); 
     }
 
     function getMemInfoAndPaintLayers() {
-      $.ajax('/api/mem_info', { dataType: 'json' }).done(function(response) {
+      $.ajax('/api/mem_info/30', { dataType: 'json' }).done(function(response) {
         var memTable = [];
         if (response.mem_info[0].hasOwnProperty('cached')) {
           memTable[0] = ['Index', 'Used', 'Cached', 'Free'];

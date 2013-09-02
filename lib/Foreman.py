@@ -27,7 +27,12 @@ class Foreman(object):
             else:
                 probe_opts = None
 
-            self.probes[stat_name] = klass(probe_opts)
+            try:
+                self.probes[stat_name] = klass(probe_opts)
+                print "[*] %s loaded and ready." % (probe,)
+            except Exception as e:
+                print "[x] Looks like you lack some prerequisites to run %s:" % (probe,)
+                print str(e)
 
         print self.probes
 

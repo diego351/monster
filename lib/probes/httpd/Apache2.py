@@ -29,9 +29,9 @@ class Apache2(object):
         delta = timedelta(seconds = interval)
         currSize = os.path.getsize(self.logPath)
         if self.lastSize != currSize:
-            self.lastSize = currSize
             log = open(self.logPath)
-
+            log.seek(self.lastSize,0) # i dont care, i love it, i love it
+            self.lastSize = currSize
             currentDateTime = datetime.now()
             limiter = currentDateTime - delta
 

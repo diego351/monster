@@ -29,7 +29,7 @@ class Postgres(object):
                             }
 
     def getCurrentData(self):
-        cursor = self.conn.cursor(cursor_factory=pg.extras.RealDictCursor)
+        cursor = self.conn.cursor(cursor_factory=self.pg.extras.RealDictCursor)
         select = "SELECT * FROM pg_stat_database WHERE datname = '%s'" % self.database
         cursor.execute(select)
         temp = cursor.fetchone()

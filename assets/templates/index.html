@@ -24,7 +24,7 @@
     <script type="text/javascript" src="js/regular/nginx-chart.js"></script>
     {% endif %}
 
-    {% if 'Postgres in enabled_probes %}
+    {% if 'Postgres' in enabled_probes %}
     <script type="text/javascript" src="js/regular/postgres-chart.js"></script>
     {% endif %}
 
@@ -66,7 +66,7 @@
       });        
     }
     {% endif %}
-    
+
     {% if 'Mysql' in enabled_probes %} 
     function drawMysqlColumns() {
       $.ajax('/api/mysql', { dataType: 'json'}).done(function(response) {

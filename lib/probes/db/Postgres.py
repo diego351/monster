@@ -17,7 +17,7 @@ class Postgres(object):
                                                                                     self.username,
                                                                                     self.password)
 
-        self.conn = pg.connect(self.connString)
+        self.conn = self.pg.connect(self.connString)
         self.conn.autocommit = True
         self.firstTime = True
         self.emptyDict = {

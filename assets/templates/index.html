@@ -45,8 +45,12 @@
           hAxis: {
             gridlines: {
               color: '#f6f6f6'
-            }
+                       },
+viewWindow: {
+min:0,
+    max:29},
           },
+                 direction: -1,
           colors: ['#ff2d55', '#5ac8fa', '#4cd964']
         };
         var chartData = google.visualization.arrayToDataTable(loadTable);

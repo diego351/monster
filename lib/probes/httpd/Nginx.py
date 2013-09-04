@@ -46,13 +46,13 @@ class Nginx(object):
                 if logDateTime < limiter:
                     continue
                 else:
-                    log.seek(-1*len(line)+1,1) # omitted one important line!
+                    log.seek(-1*len(line)-1,1) # omitted one important line!
                     break
 
 
             requests = 0
             transfer = 0
-        
+            ips = {}
             for line in log:
                 requests += 1
                 splitted = line.split('"')
@@ -69,6 +69,10 @@ class Nginx(object):
                 asdf = ipDateMesh.split("[")
                 date = asdf[1]
                 ip,meta0,meta1 = asdf[0].split()
+                if ips.has_key(ip):
+                    ips[ip] += 1
+                else:
+                    ips[ip] = 1
                 header, link, protocol = splitted[1].split()
                 code, size = splitted[2].split()
                 # sure, we have a lot of info, lets leave them for next features. 
@@ -76,6 +80,7 @@ class Nginx(object):
             log.close()
             return {"transfer":transfer,
                     "requests":requests,
+                    "ips": ips,
                     }
         else:
             return self.retNone

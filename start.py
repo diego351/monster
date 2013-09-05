@@ -19,8 +19,6 @@ parser = argparse.ArgumentParser(description="Draw some pretty pictures.")
 parser.add_argument('-i', '--interval', default=2, type=float)
 args = vars(parser.parse_args())
 
-print args
-
 try:
     # See if there's a config file present.
     if not os.path.exists('config.cfg'):

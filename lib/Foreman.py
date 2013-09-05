@@ -9,7 +9,8 @@ from probes.osx import LoadAvg
 
 class Foreman(object):
     
-    def __init__(self, diary):
+    def __init__(self, diary, args):
+        self.args = args
         self.diary = diary
         self.probes = {}
         self.worker_ps = None
@@ -51,7 +52,7 @@ class Foreman(object):
         print "[&] Foreman run(): %s." % (os.getpid(),)
         while True:
             self.probe_system()
-            time.sleep(2)
+            time.sleep(self.args['interval'])
 
     def probe_system(self):
         probe_time = int(time.time())

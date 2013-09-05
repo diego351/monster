@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import argparse
 import ConfigParser
 import os
 import signal
@@ -13,6 +14,12 @@ from Artist import Artist
 from Foreman import Foreman
 from Diary import DiaryManager
 
+# Set up argparse, yo.
+parser = argparse.ArgumentParser(description="Draw some pretty pictures.")
+parser.add_argument('-i', '--interval', default=2, type=float)
+args = vars(parser.parse_args())
+
+print args
 
 try:
     # See if there's a config file present.
@@ -31,7 +38,7 @@ try:
     diary_manager.start()
     diary = diary_manager.Diary()
 
-    foreman = Foreman(diary)
+    foreman = Foreman(diary, args)
     foreman.load_probes(config)
     foreman.start()
 

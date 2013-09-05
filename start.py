@@ -8,11 +8,17 @@ from termcolor import cprint
 
 sys.path.append('lib')
 
+import Autoconfig
 from Artist import Artist
 from Foreman import Foreman
 from Diary import DiaryManager
 
+
 try:
+    # See if there's a config file present.
+    if not os.path.exists('config.cfg'):
+        Autoconfig.first_time()
+
     # Read config file.
     config = ConfigParser.ConfigParser(allow_no_value=True)
     # Without the following, ConfigParser screws up, converting option 

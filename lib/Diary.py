@@ -1,3 +1,4 @@
+from collections import deque
 from multiprocessing.managers import BaseManager
 
 class Diary(object):
@@ -7,12 +8,13 @@ class Diary(object):
     def write(self, probe_name, value):
         try:
             self.database[probe_name].append(value)
+            print self.database[probe_name]
         except KeyError:
-            self.database[probe_name] = [value]
+            self.database[probe_name] = deque([value], 100)
 
     def read(self, probe_name, how_many=50):
         try:
-            series = self.database[probe_name][-how_many:]
+            series = list(self.database[probe_name])[-how_many:]
             return series
 
         except KeyError:

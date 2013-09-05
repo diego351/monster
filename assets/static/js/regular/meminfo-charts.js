@@ -58,6 +58,7 @@ function getMemInfoAndPaintLayers() {
     }
     var areaData = new google.visualization.arrayToDataTable(memTable);
     var options = {
+      legend: 'top',
       colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],
       isStacked: true,
       areaOpacity: 0.8,

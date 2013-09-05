@@ -14,6 +14,7 @@ function getLoadAndPaintShit() {
 
     var options = {
       curveType: 'function',
+      legend: 'top',
       fontName: 'maven pro',
       vAxis: {
         maxValue: 3.0,

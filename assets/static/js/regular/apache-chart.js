@@ -23,7 +23,19 @@ function drawApacheColumns() {
         min: 0.0
       },
       vAxis: {
-        gridlines:{color: '#f6f6f6'}}
+        gridlines:{color: '#f6f6f6'},
+        viewWindow: {
+          min: 0.0
+        }
+      },
+      vAxes: [
+        {'title': 'transfer'},
+        {'title': 'requests'}
+      ],
+      series: {
+        0: {targetAxisIndex:1},
+        1: {targetAxisIndex:0}
+      }
     };
     var chart = new google.visualization.ColumnChart(document.getElementById('apache_columns'));
     chart.draw(apacheData, options);

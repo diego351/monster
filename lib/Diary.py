@@ -8,7 +8,6 @@ class Diary(object):
     def write(self, probe_name, value):
         try:
             self.database[probe_name].append(value)
-            print self.database[probe_name]
         except KeyError:
             self.database[probe_name] = deque([value], 100)
 

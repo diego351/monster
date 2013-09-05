@@ -17,17 +17,28 @@ function drawPostgresColumns() {
     var options = { 
       colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],
       fontName: 'maven pro',
-      viewWindow: {
-        min: 0.0
-      },
       hAxis: {
         gridlines: {
           color: '#f6f6f6'
         }
       },
       vAxis: {
-        gridlines:{color: '#f6f6f6'}
-      }
+        gridlines:{color: '#f6f6f6'},
+        viewWindow: {
+          min: 0.0
+        },
+      },
+      vAxes: [
+        {'title': '`returned` count'},
+        {'title': 'rows'}
+      ],
+      series: {
+        0: {targetAxisIndex:0},
+        1: {targetAxisIndex:1},
+        2: {targetAxisIndex:1},
+        3: {targetAxisIndex:1},
+        4: {targetAxisIndex:1}
+      },
     };
     var chart = new google.visualization.ColumnChart(document.getElementById('postgres_columns'));
     chart.draw(postgresData, options);

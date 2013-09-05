@@ -4,7 +4,7 @@ class HeavyProcessStat(object):
     def __init__(self,options):
 
         if "proc_number" in options:
-            self.howMany = options["proc_number"]
+            self.howMany = int(options["proc_number"])
         else:
             self.howMany = 5
 

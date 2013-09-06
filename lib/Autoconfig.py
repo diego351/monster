@@ -2,6 +2,7 @@ import ConfigParser
 import sys
 import subprocess
 from termcolor import cprint
+import os
 
 def first_time():
     cprint("\n[#] First time? I'll be gentle. Let's see..", "white", "on_blue")
@@ -43,18 +44,35 @@ def first_time():
                     "probe": "httpd.Apache2",
                     "requirements": [], # means it's totally independent
                     "modules":  ["os", "datetime"],
+                    "defaults": {
+                                    "log_file": [
+                                                "/var/log/apache2/access.log",
+                                                "/var/log/apache2/access_log",
+                                                ]
+                                }
                 },
                 
         'apache2': {
                     "probe": "httpd.Apache2",
                     "requirements": [],
                     "modules":  ["os", "datetime"],
+                    "defaults": {
+                                    "log_file": [
+                                                "/var/log/apache2/access.log",
+                                                "/var/log/apache2/access_log",
+                                                ]
+                                }
                 },
 
         'nginx': {
                     "probe": "httpd.Nginx",
                     "requirements": [],
                      "modules":  ["os", "datetime"],
+                    "defaults": {
+                                    "log_file": [
+                                                "/var/log/apache2/access.log",
+                                                ]
+                                }
                 },
                 
         'postgres': {
@@ -91,18 +109,45 @@ def first_time():
 
 
                 config.set('probes', probe_name, None)
-                if  suspects[suspect]["requirements"]:
-                    config.add_section(probe_name) # if requirements list isn't empty
+                config.add_section(probe_name) # for one probe one section in config file
+
+                #first of all we want to check whether we can help user somehow
+                if suspects[suspect].has_key("defaults"):
+                    for defa in suspects[suspect]["defaults"]:
+                        luck = False
+                        if "log_file" in defa:
+                            #this default setting has for sure something in common with log files, lets find them
+                            for f in suspects[suspect]["defaults"]["log_file"]:
+                                if os.path.exists(f):
+                                    #WE FOUND LOG IN A HOPELESS PLACE
+                                    found = f
+                                    luck = True
+                                    break
+
+                        if luck:
+                            cprint("I found an %s log file at %s" %(probe_name,found),"green")
+                            while True:
+                                cprint("Do you want to save it as %s default log file? [Y/N]" %(probe_name),"green")
+                                choice = raw_input()
+                                if ("Y" or "y") in choice and not ("N" or "n")  in choice:
+                                    # we keep it
+                                    break
+                                if ("N" or "n") in choice and not ("Y" or "y")  in choice:
+                                    luck = False
+                                    break
+                        if luck: #if still luck
+                            config.set(probe_name, defa, found) # like apache2,log_file,/var/...
+                        else:
+                            cprint("Write your own path to log file","green")
+                            path = raw_input()
+                            config.set(probe_name,defa,path)
+
+
                 for req in suspects[suspect]["requirements"]: # If theres no requirements, it's not gonna be executed, I believe
                     cprint(prompts[req], "cyan") # print proper prompt
                     raw = raw_input()
                     config.set(probe_name, req, raw) # how about encoding?
                     # THIS IS PERFECT PLACE TO PRECHECK PROBE CONFIGURATION
-
-
-
-                
-
 
                 # Remove the probe from `suspects` many services have multiple processes
                 # and there's no need to go through this crap all over again.

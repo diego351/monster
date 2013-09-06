@@ -5,23 +5,12 @@ class Apache2(object):
 
     def __init__(self, options):
 
-        if 'log_path' in options:
-            self.logPath = options['log_path']
-        else:
-            # No log path given, we test a couple sane defaults
-            # to see if we can handle this ourselves.
-            possible_paths = [
-                '/var/log/apache2/access.log',
-                '/var/log/apache2/access_log'
-            ]
-
-            for path in possible_paths:
-                if os.path.exists(path):
-                    print "Found an Apache2 log file in %s" % (path,) 
-                    self.logPath = path
+        if 'log_file' in options:
+            self.logPath = options['log_file']
 
         self.lastSize = 0
-        self.retNone = {"transfer": 0,
+        self.retNone = {
+                        "transfer": 0,
                         "requests": 0,
                         }
 

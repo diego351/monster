@@ -17,12 +17,12 @@ def first_time():
     # Figure out OS from sys.platform
     # See: http://docs.python.org/2/library/sys.html#sys.platform
     if sys.platform == 'darwin':
-        print "[+] You're on OS X. Enabling LoadAvg and MemInfo HeavyProcessStat probes.."
+        print "[+] You're on OS X. Enabling LoadAvg, MemInfo and HeavyProcessStat probes."
         config.set('probes', 'osx.LoadAvg', None)
         config.set('probes', 'osx.MemInfo', None)
         config.set('probes', 'osx.HeavyProcessStat', None)
     elif sys.platform == 'linux2':
-        print "[+] You're on some flavor of Linux.. Enabling LoadAvg and MemInfo HeavyProcessStat probes."
+        print "[+] You're on some flavor of Linux.. Enabling LoadAvg, MemInfo andHeavyProcessStat probes."
         config.set('probes', 'linux.LoadAvg', None)
         config.set('probes', 'linux.MemInfo', None)
         config.set('probes', 'linux.HeavyProcessStat', None)
@@ -42,25 +42,30 @@ def first_time():
         'httpd': {
                     "probe": "httpd.Apache2",
                     "requirements": [], # means it's totally independent
+                    "modules":  ["os", "datetime"],
                 },
                 
         'apache2': {
                     "probe": "httpd.Apache2",
                     "requirements": [],
+                    "modules":  ["os", "datetime"],
                 },
 
         'nginx': {
                     "probe": "httpd.Nginx",
                     "requirements": [],
+                     "modules":  ["os", "datetime"],
                 },
                 
         'postgres': {
                     "probe": "db.Postgres",
                     "requirements":  ["username", "password", "db"],
+                    "modules":  ["psycopg2"],
                 },
         'mysql': {
                     "probe": "db.MySQL",
-                    "requirements": ["username", "password"]
+                    "requirements": ["username", "password"],
+                    "modules":  ["MySQLdb"],
                 },
              }
 
@@ -70,6 +75,16 @@ def first_time():
             if ps_line.find(suspect) != -1:
                 probe_name = suspects[suspect]["probe"]
                 cprint("[+] Found %s. Loading the %s probe.." % (suspect, probe_name))
+
+                for mod in suspects[suspect]["modules"]:
+                 # check whether mod is importable
+                    try:
+                        __import__(mod)
+                    except ImportError:
+                        cprint("Seems like %s library is missing. How about 'pip install %s'?" %(mod,mod),"red")
+
+
+
                 config.set('probes', probe_name, None)
                 if  suspects[suspect]["requirements"]:
                     config.add_section(probe_name) # if requirements list isn't empty
@@ -78,6 +93,7 @@ def first_time():
                     raw = raw_input()
                     config.set(probe_name, req, raw) # how about encoding?
                     # THIS IS PERFECT PLACE TO PRECHECK PROBE CONFIGURATION
+
 
 
                 

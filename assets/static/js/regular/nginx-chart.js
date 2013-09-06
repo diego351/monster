@@ -15,9 +15,6 @@ function drawNginxColumns() {
     var nginxData = new google.visualization.arrayToDataTable(nginxTable);
     var options = { 
       colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#ffcc00'],
-      viewWindow: {
-        min: 0.0
-      },
       fontName: 'maven pro',
       hAxis: {
         gridlines: {
@@ -33,7 +30,10 @@ function drawNginxColumns() {
         1:{targetAxisIndex:1}
       },
       vAxis: {
-        gridlines:{color: '#f6f6f6'}
+        gridlines:{color: '#f6f6f6'},
+        viewWindow: {
+          min: 0.0
+        }
       }
     };
 

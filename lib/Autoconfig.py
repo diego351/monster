@@ -22,30 +22,66 @@ def first_time():
         config.set('probes', 'osx.MemInfo', None)
         config.set('probes', 'osx.HeavyProcessStat', None)
     elif sys.platform == 'linux2':
-        print "[+] You're on some flavor of Linux.. Enabling LoadAvg and MemInfo probes."
+        print "[+] You're on some flavor of Linux.. Enabling LoadAvg and MemInfo HeavyProcessStat probes."
         config.set('probes', 'linux.LoadAvg', None)
         config.set('probes', 'linux.MemInfo', None)
-        config.set('probes', 'linux.HeavyLoadStat', None)
+        config.set('probes', 'linux.HeavyProcessStat', None)
     else:
         cprint("Are you running this on a refrigerator?", "red")
         return False
 
-    # Let's find some running services.
+    
+    # Let's find some running services
+    prompts = {
+                "username": "Gimme username below:",
+                "password": "Gimme password below:",
+                "database": "Gimme database name below:",
+            }
+    # It's going to be flexible like niggas pants
     suspects = {
-        'httpd': 'httpd.Apache2',
-        'apache2': 'httpd.Apache2',
-        'nginx': 'httpd.Nginx',
-        'postgres': 'db.Postgres',
-        'mysql': 'db.MySQL'
-    }
+        'httpd': {
+                    "probe": "httpd.Apache2",
+                    "requirements": [], # means it's totally independent
+                },
+                
+        'apache2': {
+                    "probe": "httpd.Apache2",
+                    "requirements": [],
+                },
+
+        'nginx': {
+                    "probe": "httpd.Nginx",
+                    "requirements": [],
+                },
+                
+        'postgres': {
+                    "probe": "db.Postgres",
+                    "requirements":  ["username", "password", "db"],
+                },
+        'mysql': {
+                    "probe": "db.MySQL",
+                    "requirements": ["username", "password"]
+                },
+             }
 
     ps_out = subprocess.check_output(['ps', '-A'])
     for ps_line in ps_out.split("\n"):
         for suspect in suspects:
             if ps_line.find(suspect) != -1:
-                probe_name = suspects[suspect]
+                probe_name = suspects[suspect]["probe"]
                 cprint("[+] Found %s. Loading the %s probe.." % (suspect, probe_name))
                 config.set('probes', probe_name, None)
+                if  suspects[suspect]["requirements"]:
+                    config.add_section(probe_name) # if requirements list isn't empty
+                for req in suspects[suspect]["requirements"]: # If theres no requirements, it's not gonna be executed, I believe
+                    cprint(prompts[req], "cyan") # print proper prompt
+                    raw = raw_input()
+                    config.set(probe_name, req, raw) # how about encoding?
+                    # THIS IS PERFECT PLACE TO PRECHECK PROBE CONFIGURATION
+
+
+                
+
 
                 # Remove the probe from `suspects` many services have multiple processes
                 # and there's no need to go through this crap all over again.

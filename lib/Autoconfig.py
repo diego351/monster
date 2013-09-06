@@ -68,7 +68,12 @@ def first_time():
                     "modules":  ["MySQLdb"],
                 },
              }
-
+    mod_to_pip = {
+                    "MySQLdb": "mysql-python",
+                    "psycopg2": "psycopg2",
+                }
+                
+    
     ps_out = subprocess.check_output(['ps', '-A'])
     for ps_line in ps_out.split("\n"):
         for suspect in suspects:
@@ -81,7 +86,7 @@ def first_time():
                     try:
                         __import__(mod)
                     except ImportError:
-                        cprint("Seems like %s library is missing. How about 'pip install %s'?" %(mod,mod),"red")
+                        cprint("Seems like %s library is missing. How about 'pip install %s'?" %(mod,mod_to_pip[mod]),"red")
 
 
 

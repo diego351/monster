@@ -22,7 +22,7 @@ def first_time():
         config.set('probes', 'osx.MemInfo', None)
         config.set('probes', 'osx.HeavyProcessStat', None)
     elif sys.platform == 'linux2':
-        print "[+] You're on some flavor of Linux. Enabling LoadAvg, MemInfo andHeavyProcessStat probes."
+        print "[+] You're on some flavor of Linux. Enabling LoadAvg, MemInfo and HeavyProcessStat probes."
         config.set('probes', 'linux.LoadAvg', None)
         config.set('probes', 'linux.MemInfo', None)
         config.set('probes', 'linux.HeavyProcessStat', None)

@@ -9,20 +9,37 @@ class HeavyProcessStat(object):
 
     def report(self):
         howMany = self.howMany
-        proc = {}
-        out = commands.getoutput("ps xrco %cpu,command") # -o for custom format, -r for cpu sorting, -c for just process name (not full path, -x for all processes)
-        for line in out.split("\n")[1:]: #ommiting shit
+        cpuDict = {}
+        memDict = {}
+        outCpu = commands.getoutput("ps xrco %cpu,command") # -o for custom format, -r for cpu sorting, -c for just process name (not full path, -x for all processes)
+        outMem = commands.getoutput("ps xmco %mem,command")
+        for line in outCpu.split("\n")[1:]: #ommiting shit
             s = line.split(None, 1) # btw how to not pass a separator (use default separator == any whitespace) and split with max split? Any ideas? "\s" separator doesn't seem to work
-            if proc.has_key(s[1]): # this is nessesary since we can have processes with not unique name like "Google Chrome"
-                proc[s[1]] += float(s[0])
+            if cpuDict.has_key(s[1]): # this is nessesary since we can have processes with not unique name like "Google Chrome"
+                cpuDict[s[1]] += float(s[0])
             else:
-                proc[s[1]] = float(s[0])
+                cpuDict[s[1]] = float(s[0])
                 howMany -= 1
 
             if howMany == 0: # means we already gathered top 5 proceses with unique name!
                 break
 
-        return proc
+        howMany = self.howMany
+        
+        for line in outMem.split("\n")[1:]: #ommiting shit
+            s = line.split(None, 1) # btw how to not pass a separator (use default separator == any whitespace) and split with max split? Any ideas? "\s" separator doesn't seem to work
+            if memDict.has_key(s[1]): # this is nessesary since we can have processes with not unique name like "Google Chrome"
+                memDict[s[1]] += float(s[0])
+            else:
+                memDict[s[1]] = float(s[0])
+                howMany -= 1
+
+            if howMany == 0: # means we already gathered top 5 proceses with unique name!
+                break
+        return {
+                "cpuDict": cpuDict,
+                "memDict": memDict,
+                }
 
 
 

@@ -25,6 +25,7 @@ def first_time():
         print "[+] You're on some flavor of Linux.. Enabling LoadAvg and MemInfo probes."
         config.set('probes', 'linux.LoadAvg', None)
         config.set('probes', 'linux.MemInfo', None)
+        config.set('probes', 'linux.HeavyLoadStat', None)
     else:
         cprint("Are you running this on a refrigerator?", "red")
         return False

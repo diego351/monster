@@ -17,9 +17,10 @@ def first_time():
     # Figure out OS from sys.platform
     # See: http://docs.python.org/2/library/sys.html#sys.platform
     if sys.platform == 'darwin':
-        print "[+] You're on OS X. Enabling LoadAvg and MemInfo probes.."
+        print "[+] You're on OS X. Enabling LoadAvg and MemInfo HeavyProcessStat probes.."
         config.set('probes', 'osx.LoadAvg', None)
         config.set('probes', 'osx.MemInfo', None)
+        config.set('probes', 'osx.HeavyProcessStat', None)
     elif sys.platform == 'linux2':
         print "[+] You're on some flavor of Linux.. Enabling LoadAvg and MemInfo probes."
         config.set('probes', 'linux.LoadAvg', None)

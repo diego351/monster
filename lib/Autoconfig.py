@@ -129,10 +129,10 @@ def first_time():
                             while True:
                                 cprint("Do you want to save it as %s default log file? [Y/N]" %(probe_name),"green")
                                 choice = raw_input()
-                                if ("Y" or "y") in choice and not ("N" or "n")  in choice:
+                                if (("Y" or "y") in choice) and (not ("N" or "n")  in choice):
                                     # we keep it
                                     break
-                                if ("N" or "n") in choice and not ("Y" or "y")  in choice:
+                                if (("N" or "n") in choice) and (not ("Y" or "y")  in choice):
                                     luck = False
                                     break
                         if luck: #if still luck

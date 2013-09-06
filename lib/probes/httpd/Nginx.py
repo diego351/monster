@@ -4,7 +4,6 @@ from datetime import datetime,timedelta
 class Nginx(object):
 
     def __init__(self, options):
-        if not options: options = {}
 
         if 'log_path' in options:
             self.logPath = options['log_path']

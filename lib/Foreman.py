@@ -28,7 +28,7 @@ class Foreman(object):
             if probe in config.sections():
                 probe_opts = dict(config.items(probe))
             else:
-                probe_opts = None
+                probe_opts = {}
 
             try:
                 self.probes[stat_name] = klass(probe_opts)

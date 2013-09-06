@@ -1,6 +1,6 @@
 class MySQL(object):
 
-    def __init__(self, parameters):
+    def __init__(self, options):
         # Let's see if MySQLdb is present. 
         # If not, we raise an exception with a slightly more
         # helpful message that the default ImportError
@@ -13,7 +13,7 @@ class MySQL(object):
                 "(you may need a mysql-dev package on your system for that, by the way)\n"
                 )
 
-        self.conn=MySQLdb.connect(host="localhost", user=parameters.get('username'), passwd=parameters.get('password'))
+        self.conn=MySQLdb.connect(host="localhost", user=options.get('username'), passwd=options.get('password'))
         self.cursor = self.conn.cursor()
         self.firstTime = True
         self.emptyDict = {

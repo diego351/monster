@@ -1,9 +1,7 @@
 import commands
 
 class HeavyProcessStat(object):
-    def __init__(self,options=None):
-        if not options: options = {}
-
+    def __init__(self,options):
         if "proc_number" in options:
             self.howMany = int(options["proc_number"])
         else:

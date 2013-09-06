@@ -1,5 +1,5 @@
 class Postgres(object):
-    def __init__(self, parameters):
+    def __init__(self, options):
 
         try:
             import psycopg2
@@ -9,9 +9,9 @@ class Postgres(object):
         except ImportError:
             raise Exception("Psycopg missing, but postgres probe selected..")
 
-        self.database = parameters.get('database')
-        self.username = parameters.get('username')
-        self.password = parameters.get('password')
+        self.database = options.get('database')
+        self.username = options.get('username')
+        self.password = options.get('password')
 
         self.connString = "host='localhost' dbname='%s' user='%s' password='%s'" % (self.database,
                                                                                     self.username,

@@ -1,7 +1,7 @@
 import commands
 
 class SystemInfo(object):
-    def __init__(self):
+    def __init__(self,options):
         self.hostname = commands.getoutput("hostname")
         self.os = commands.getoutput("uname -a")
     

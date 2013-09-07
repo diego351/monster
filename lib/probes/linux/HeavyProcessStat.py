@@ -7,6 +7,9 @@ class HeavyProcessStat(object):
         else:
             self.howMany = 5
 
+        self.prevCpuDict = {}
+        self.prevMemDict = {}
+
     def report(self):
         howMany = self.howMany
         cpuDict = {}
@@ -36,10 +39,52 @@ class HeavyProcessStat(object):
 
             if howMany == 0: # means we already gathered top 5 proceses with unique name!
                 break
+        
+        memList = []
+        cpuList = []
+
+        for process in cpuDict:
+            if self.prevCpuDict.has_key(process):
+                if cpuDict[process] > self.prevCpuDict[process]:
+                    tendency = 1
+                elif cpuDict[process] == self.prevCpuDict[process]:
+                    tendency = 0
+                elif cpuDict[process] < self.prevCpuDict[process]:
+                    tendency  =-1
+            else:
+                tendency = 1
+
+            cpuList.append({
+                            "process": process,
+                            "value": cpuDict[process],
+                            "tendency": tendency,
+                            })
+
+            self.prevCpuDict = cpuDict
+
+        for process in memDict:
+            if self.prevMemDict.has_key(process):
+                if memDict[process] > self.prevMemDict[process]:
+                    tendency = 1
+                elif memDict[process] == self.prevMemDict[process]:
+                    tendency = 0
+                elif memDict[process] < self.prevMemDict[process]:
+                    tendency = -1
+            else:
+                tendency = 1
+            
+            memList.append({
+                            "process": process,
+                            "value": memDict[process],
+                            "tendency": tendency,
+                            })
+
+        self.prevMemDict = memDict
         return {
-                "cpuDict": cpuDict,
-                "memDict": memDict,
+                "cpuList": cpuList,
+                "memList": memList,
                 }
+
 
 
 

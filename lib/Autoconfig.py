@@ -36,7 +36,7 @@ def first_time():
     prompts = {
                 "username": "Gimme username below:",
                 "password": "Gimme password below:",
-                "db": "Gimme database name below:",
+                "database": "Gimme database name below:",
             }
     # It's going to be flexible like niggas pants
     suspects = {

@@ -7,8 +7,15 @@ function drawHeavyProcessTables() {
         var cpu_entry = [
             response.cpuList[i].process,
             response.cpuList[i].value,
-            response.cpuList[i].tendency
         ];  
+        if (response.cpuList[i].tendency == 1) {
+            t = "&#x25B2;";
+        } else if (response.cpuList[i].tendency == -1) {
+            t = "&#x25BC";
+        } else {
+            t = "&#x25cf;";
+        }
+        cpu_entry[2] = t;
         cpu_table.push(cpu_entry);
     }
 
@@ -19,12 +26,22 @@ function drawHeavyProcessTables() {
         var mem_entry = [
             response.memList[i].process,
             response.memList[i].value,
-            response.memList[i].tendency
         ];
+        if (response.memList[i].tendency == 1) {
+            t = "&#x25B2;";
+        } else if (response.memList[i].tendency == -1) {
+            t = "&#x25BC";
+        } else {
+            t = "&#x25cf;";
+        }
+        mem_entry[2] = t;
         mem_table.push(mem_entry);
     };
 
     var options = {
+      sortColumn: 1,
+      sortAscending: false,
+      allowHtml: true,
       curveType: 'function',
       legend: 'top',
       fontName: 'maven pro',

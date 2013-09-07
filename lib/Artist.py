@@ -55,10 +55,8 @@ class Artist(object):
 
         @app.route('/api/heavy_process_stat')
         def api_heavy_process_stat():
-            heavy_process_stat = app.diary.read('HeavyProcessStat')
-            return jsonify({
-                'heavy_process_stat': heavy_process_stat
-            })
+            heavy_process_stat = app.diary.read('HeavyProcessStat', how_many=1)[0]
+            return jsonify(heavy_process_stat)
 
         @app.route('/api/mem_info/<int:how_many>')
         def api_mem_info(how_many=40):

@@ -128,7 +128,7 @@ def first_time():
                         if luck:
                             cprint("I found an %s log file at %s" %(probe_name,found),"green")
                             while True:
-                                cprint("Do you want to save it as %s default log file? [Y/N]" %(probe_name),"green")
+                                cprint("Do you want to save it as %s default log file? [Y/n]" %(probe_name),"green")
                                 choice = raw_input()
                                 if 'Y' in choice or 'y' in choice or choice == "" and not ('N' in choice or 'n' in choice ):
                                     # we keep it

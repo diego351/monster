@@ -2,24 +2,24 @@ function drawHeavyProcessTables() {
   /* CPU table first. */ 
   $.ajax('/api/heavy_process_stat', { dataType: 'json' }).done(function(response) {
     var cpu_table = [];
-    cpu_table[0] = ['Process', 'CPU usage', 'Change'];
+    cpu_table[0] = ['Process', 'CPU usage', 'Tendency'];
     for (var i = 0; i < response.cpuList.length; i++) {
         var cpu_entry = [
             response.cpuList[i].process_name,
             response.cpuList[i].cpu_usage,
-            response.cpuList[i].change
+            response.cpuList[i].tendency
         ];  
         cpu_table.push(cpu_entry);
     }
 
     /* mem */
     var mem_table = [];
-    mem_table[0] = ['Process', 'Memory usage', 'Change'];
+    mem_table[0] = ['Process', 'Memory usage', 'Tendency'];
     for (var i = 0; i < response.memList.length; i++) {
         var mem_entry = [
             response.memList[i].process_name,
             response.memList[i].mem_usage,
-            response.memList[i].change
+            response.memList[i].tendency
         ];
     };
 

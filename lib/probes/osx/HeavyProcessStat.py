@@ -42,14 +42,18 @@ class HeavyProcessStat(object):
         cpuList = []
 
         for process in cpuDict:
-            cpuList.append({"process": process})
-            cpuList.append({"value": cpuDict[process]})
-            cpuList.append({"tendency": 0})
+            cpuList.append({
+                            "process": process,
+                            "value": cpuDict[process],
+                            "tendency": 0,
+                            })
 
         for process in memDict:
-            memList.append({"process": process})
-            memList.append({"value": memDict[process]})
-            memList.append({"tendency": 0})
+            memList.append({
+                            "process": process,
+                            "value": memDict[process],
+                            "tendency": 0,
+                            })
         
 
             

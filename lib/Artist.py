@@ -54,7 +54,7 @@ class Artist(object):
                 'load': load_record, 
             })
 
-        @app.route('/api/heavy_process_stat/')
+        @app.route('/api/heavy_process_stat')
         def api_heavy_process_stat():
             heavy_process_stat = app.diary.read('HeavyProcessStat')
             return jsonify({

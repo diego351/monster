@@ -25,6 +25,7 @@ class Apache2(object):
         self.retNone = {
                         "transfer": 0,
                         "requests": 0,
+                        "ips": {},
                         }
         self.ip_to_geo = {}
 
@@ -101,7 +102,6 @@ class Apache2(object):
             a = {}
             for ip in self.ip_to_geo:
                 a[ip] = self.ip_to_geo[ip]
-
 
             return {
                     "transfer": transfer,

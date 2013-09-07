@@ -22,7 +22,6 @@ class Artist(object):
         )
         app.diary = diary
         app.secret_key = "Alice touches herself."
-
         if config_opts.has_option('overall', 'password'):
             app.password = config_opts.get('overall', 'password')
             @app.before_request
@@ -71,20 +70,18 @@ class Artist(object):
         @app.route('/api/apache')
         def api_apache():
             apache_activity = app.diary.read('Apache2')
+            
             return jsonify({
-                'apache_activity': {
-                                    "requests": apache_activity["requests"],
-                                    "transfer": apache_activity["transfer"],
-                                    }
+                'apache_activity': apache_activity
+                                    })
 
-                            })
         @app.route('/api/apache_geocache')
         def api_apache_geocache():
-            apache_geocache_activity = app.diary.read('Apache2')
+            apache_ips = app.diary.read('Apache2', how_many = 1)[0]
             return jsonify({
-                'apache_geocache_activity':
+                'apache_ips':
                                             {
-                                            "ips": apache_activity["ips"]
+                                            "ips": apache_ips["ips"]
                                             }
                             })
 

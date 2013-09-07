@@ -105,10 +105,11 @@ class Artist(object):
             })
         @app.route('/api/nginx_geocache')
         def api_nginx_geocache():
-            nginx_api = app.diary.read('Nginx', how_many = 1)[0]
+            nginx_ips = app.diary.read('Nginx', how_many = 1)[0]
+	    print nginx_ips
             return jsonify({
-                'nginx_ups':{
-                                "ips": nginx_ips["ips"]
+                'nginx_ips':{
+                                "ips": nginx_ips.get("ips", [])
                             }
                             })
 

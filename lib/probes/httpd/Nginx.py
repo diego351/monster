@@ -20,10 +20,11 @@ class Nginx(object):
                     self.logPath = log
                     cprint("You didn't add Nginx log file in your config file, but fortunately Nginx probe figured it out on themself!","red")
         self.lastSize = 0
-        self.retNone = {"transfer": 0,
-                        "requests": 0,
-                        "ips": {}
-                        }
+        self.retNone = {
+            "transfer": 0,
+            "requests": 0,
+            "ips": []
+        }
         self.ip_to_geo = {}
 
     def report(self, interval=5):

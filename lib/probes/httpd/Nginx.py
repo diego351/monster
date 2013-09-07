@@ -93,10 +93,11 @@ class Nginx(object):
                                             "longitude": float(foo["longitude"]),
                                             "latitude": float(foo["latitude"]),
                                             "number": int(ips[ip]),
+                                            "ip": ip,
                                         }
-            a = {}
+            a = []
             for ip in self.ip_to_geo:
-                a[ip] = self.ip_to_geo[ip]
+                a.append(self.ip_to_geo[ip])
             
     
             return {

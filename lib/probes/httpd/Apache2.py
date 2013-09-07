@@ -1,12 +1,23 @@
 import os
+from termcolor import cprint
 from datetime import datetime,timedelta
 
 class Apache2(object):
 
     def __init__(self, options):
 
+        log_path_list = [
+                        "/var/log/apache2/access.log",
+                        "/var/log/apache2/access_log",
+                ]
         if 'log_file' in options:
             self.logPath = options['log_file']
+        else:
+            for log in log_path_list:
+                if os.path.exists(log): 
+                    self.logPath = log
+                    cprint("You didn't add Apache2 log file in your config file, but fortunately Apache2 probe figured it out on themself!","red")
+
 
         self.lastSize = 0
         self.retNone = {

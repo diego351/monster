@@ -78,6 +78,16 @@ class Artist(object):
                                     }
 
                             })
+        @app.route('/api/apache_geocache')
+        def api_apache_geocache():
+            apache_geocache_activity = app.diary.read('Apache2')
+            return jsonify({
+                'apache_geocache_activity':
+                                            {
+                                            "ips": apache_activity["ips"]
+                                            }
+                            })
+
 
         @app.route('/api/postgres/<int:how_many>')
         def api_postgres(how_many=30):

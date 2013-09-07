@@ -87,7 +87,6 @@ class Apache2(object):
             for ip in ips:
                 if ":" in ip:
                     print "ipv6 still out of support"
-                    del ips[ip]
                     continue
 
                 if not self.ip_to_geo.has_key(ip):

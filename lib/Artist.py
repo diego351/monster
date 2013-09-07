@@ -77,10 +77,9 @@ class Artist(object):
         def api_apache_geocache():
             apache_ips = app.diary.read('Apache2', how_many = 1)[0]
             return jsonify({
-                'apache_ips':
-                                            {
-                                            "ips": apache_ips["ips"]
-                                            }
+                'apache_ips':{
+                               "ips": apache_ips["ips"]
+                            }
                             })
 
 
@@ -104,6 +103,14 @@ class Artist(object):
             return jsonify({
                 'nginx_stats': nginx_stats,
             })
+        @app.route('/api/nginx_geocache')
+        def api_nginx_geocache():
+            nginx_api = app.diary.read('Nginx', how_many = 1)[0]
+            return jsonify({
+                'nginx_ups':{
+                                "ips": nginx_ips["ips"]
+                            }
+                            })
 
         @app.route('/password', methods=['GET', 'POST'])
         def check_password():

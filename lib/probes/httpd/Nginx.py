@@ -1,28 +1,30 @@
 import os
 from datetime import datetime,timedelta
+from termcolor import cprint
+from urllib2 import urlopen
+import json
 
 class Nginx(object):
 
     def __init__(self, options):
 
+        log_path_list = [
+                        '/var/log/nginx/access.log',
+                        ]
+
         if 'log_path' in options:
             self.logPath = options['log_path']
         else:
-            # No log path given, we test a couple sane defaults
-            # to see if we can handle this ourselves.
-            possible_paths = [
-                '/var/log/nginx/access.log',
-            ]
-
-            for path in possible_paths:
-                if os.path.exists(path):
-                    print "Found an Nginx log file in %s" % (path,) 
-                    self.logPath = path
-
+            for log in log_path_list:
+                if os.path.exists(log):
+                    self.logPath = log
+                    cprint("You didn't add Nginx log file in your config file, but fortunately Nginx probe figured it out on themself!","red")
         self.lastSize = 0
         self.retNone = {"transfer": 0,
                         "requests": 0,
+                        "ips": {}
                         }
+        self.ip_to_geo = {}
 
     def report(self, interval=5):
         delta = timedelta(seconds = interval)
@@ -77,9 +79,30 @@ class Nginx(object):
                 # sure, we have a lot of info, lets leave them for next features. 
         
             log.close()
-            return {"transfer":transfer,
-                    "requests":requests,
-                    "ips": ips,
+
+            for ip in ips:
+                if ":" in ip:
+                    print "ipv6 still out of support"
+                    continue
+                
+                if not self.ip_to_geo.has_key(ip):
+                    link = "http://freegeoip.net/json/%s" %(ip)
+                    dzejson = urlopen(link).read()
+                    foo = json.loads(dzejson)
+                    self.ip_to_geo[ip] = {
+                                            "longitude": float(foo["longitude"]),
+                                            "latitude": float(foo["latitude"]),
+                                            "number": int(ips[ip]),
+                                        }
+            a = {}
+            for ip in self.ip_to_geo:
+                a[ip] = self.ip_to_geo[ip]
+            
+    
+            return {
+                    "transfer": transfer,
+                    "requests": requests,
+                    "ips": a,
                     }
         else:
             return self.retNone

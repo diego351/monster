@@ -44,7 +44,7 @@ class HeavyProcessStat(object):
         for process in cpuDict:
             cpuList.append({"process": process})
             cpuList.append({"value": cpuDict[process]})
-            cpu.List.append({"tendency": 0})
+            cpuList.append({"tendency": 0})
 
         for process in memDict:
             memList.append({"process": process})

@@ -78,7 +78,7 @@ class HeavyProcessStat(object):
             memList.append({
                             "process": process,
                             "value": memDict[process],
-                            "tendency": 0,
+                            "tendency": tendency,
                             })
         self.prevMemDict = memDict
         

@@ -67,7 +67,7 @@ class HeavyProcessStat(object):
 
         for process in memDict:
             if self.prevMemDict.has_key(process):
-                if mem[process] > self.prevMemDict[process]:
+                if memDict[process] > self.prevMemDict[process]:
                     tendency = 1
                 elif memDict[process] == self.prevMemDict[process]:
                     tendency = 0

@@ -9,7 +9,7 @@ class Postgres(object):
         except ImportError:
             raise Exception("Psycopg missing, but postgres probe selected..")
 
-        self.database = options.get('database')
+        self.database = options.get('db')
         self.username = options.get('username')
         self.password = options.get('password')
 

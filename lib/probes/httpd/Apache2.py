@@ -97,6 +97,7 @@ class Apache2(object):
                     self.ip_to_geo[ip] = {
                                             "longitude": float(foo["longitude"]),
                                             "latitude": float(foo["latitude"]),
+                                            "number": int(ips[ip]),
                                         }
             #
             a = {}

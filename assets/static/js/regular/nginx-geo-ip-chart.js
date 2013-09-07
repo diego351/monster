@@ -1,13 +1,12 @@
 function drawNginxMap() {
   $.ajax('/api/nginx_geocache', { dataType: 'json' }).done(function(response) {
     var ip_table = [];   
-    ip_table[0] = ['Latitude', 'Longitude', 'IP', 'Requests'];
+    ip_table[0] = ['Latitude', 'Longitude', 'Requests'];
     var ip_list = response.nginx_ips.ips;
     for (var i = 0; i < ip_list.length; i++) {
       var ip_entry = [
         ip_list[i].latitude,
         ip_list[i].longitude,
-        ip_list[i].ip,
         ip_list[i].number
       ];
       ip_table.push(ip_entry);

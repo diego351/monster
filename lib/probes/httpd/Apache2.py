@@ -87,7 +87,6 @@ class Apache2(object):
             for ip in ips:
                 if ":" in ip:
                     print "ipv6 still out of support"
-                    del ips[ip]
                     continue
 
                 if not self.ip_to_geo.has_key(ip):
@@ -98,11 +97,12 @@ class Apache2(object):
                                             "longitude": float(foo["longitude"]),
                                             "latitude": float(foo["latitude"]),
                                             "number": int(ips[ip]),
+                                            "ip": ip,
                                         }
             #
-            a = {}
+            a = []
             for ip in self.ip_to_geo:
-                a[ip] = self.ip_to_geo[ip]
+                a.append(self.ip_to_geo[ip])
 
             return {
                     "transfer": transfer,

@@ -72,8 +72,12 @@ class Artist(object):
         def api_apache():
             apache_activity = app.diary.read('Apache2')
             return jsonify({
-                'apache_activity': apache_activity,
-            })
+                'apache_activity': {
+                                    "requests": apache_activity["requests"],
+                                    "transfer": apache_activity["transfer"],
+                                    }
+
+                            })
 
         @app.route('/api/postgres/<int:how_many>')
         def api_postgres(how_many=30):

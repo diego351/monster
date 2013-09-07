@@ -68,7 +68,8 @@ class Apache2(object):
         
             log.close()
             
-            return {"transfer":transfer,
+            return {
+                    "transfer":transfer,
                     "requests":requests,
                     "ips": ips,
                     }

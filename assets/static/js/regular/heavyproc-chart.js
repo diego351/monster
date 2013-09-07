@@ -5,8 +5,8 @@ function drawHeavyProcessTables() {
     cpu_table[0] = ['Process', 'CPU usage', 'Tendency'];
     for (var i = 0; i < response.cpuList.length; i++) {
         var cpu_entry = [
-            response.cpuList[i].process_name,
-            response.cpuList[i].cpu_usage,
+            response.cpuList[i].process,
+            response.cpuList[i].value,
             response.cpuList[i].tendency
         ];  
         cpu_table.push(cpu_entry);
@@ -17,10 +17,11 @@ function drawHeavyProcessTables() {
     mem_table[0] = ['Process', 'Memory usage', 'Tendency'];
     for (var i = 0; i < response.memList.length; i++) {
         var mem_entry = [
-            response.memList[i].process_name,
-            response.memList[i].mem_usage,
+            response.memList[i].process,
+            response.memList[i].value,
             response.memList[i].tendency
         ];
+        mem_table.push(mem_entry);
     };
 
     var options = {
@@ -52,7 +53,7 @@ function drawHeavyProcessTables() {
     var cpu_chart = new google.visualization.Table(document.getElementById('hps-cpu-chart-div'));
     cpu_chart.draw(cpu_chart_data, options);
 
-    var mem_char_data = google.visualization.arrayToDataTable(mem_table);
+    var mem_chart_data = google.visualization.arrayToDataTable(mem_table);
     var mem_chart = new google.visualization.Table(document.getElementById('hps-mem-chart-div'));
     mem_chart.draw(mem_chart_data, options);
 

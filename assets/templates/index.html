@@ -42,7 +42,7 @@
 
     <script type="text/javascript">
   
-    google.load("visualization", "1", {packages:["corechart"]});
+    google.load("visualization", "1", {packages:["corechart", "table"]});
     {% if 'LoadAvg' in enabled_probes %}
     google.setOnLoadCallback(getLoadAndPaintShit);
     {% endif %}
@@ -63,7 +63,7 @@
     google.setOnLoadCallback(drawMysqlColumns);
     {% endif %}
     {% if 'HeavyProcessStat' in enabled_probes %}
-    google.setOnLoadCallback(drawHeavyProcessTable);
+    google.setOnLoadCallback(drawHeavyProcessTables);
     {% endif %}
 
     var refresh = false;

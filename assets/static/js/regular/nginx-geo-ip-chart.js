@@ -11,12 +11,13 @@ function drawNginxMap() {
       ];
       ip_table.push(ip_entry);
     }
+    console.log(ip_table);
 
     var options = {
       legend: 'top',
       fontName: 'maven pro',
       displayMode: 'markers',
-      colors: ['#ff2d55', '#5ac8fa', '#4cd964']
+//      colors: ['#ff2d55', '#5ac8fa', '#4cd964']
     };
     var chart_data = google.visualization.arrayToDataTable(ip_table);
     var chart = new google.visualization.GeoChart(document.getElementById('nginx-geo-ip-div'));

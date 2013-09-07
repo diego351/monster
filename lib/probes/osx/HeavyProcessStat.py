@@ -21,6 +21,7 @@ class HeavyProcessStat(object):
                 cpuDict[s[1]] = float(s[0])
                 howMany -= 1
 
+
             if howMany == 0: # means we already gathered top 5 proceses with unique name!
                 break
 
@@ -36,9 +37,22 @@ class HeavyProcessStat(object):
 
             if howMany == 0: # means we already gathered top 5 proceses with unique name!
                 break
+
+        memList = []
+        cpuList = []
+
+        for i in cpuDict:
+            cpuDict[i]["tendency"] = 0
+            cpuList.append(cpuDict[i])
+        for i in memDict:
+            memDict[i]["tendency"] = 0
+            memList.append(memDict[i])
+
+        
+            
         return {
-                "cpuDict": cpuDict,
-                "memDict": memDict,
+                "cpuList": cpuList,
+                "memList": memList,
                 }
 
 

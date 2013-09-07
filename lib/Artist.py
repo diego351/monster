@@ -22,6 +22,7 @@ class Artist(object):
         )
         app.diary = diary
         app.secret_key = "Alice touches herself."
+        app.debug=True
         if config_opts.has_option('overall', 'password'):
             app.password = config_opts.get('overall', 'password')
             @app.before_request

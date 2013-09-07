@@ -1,6 +1,8 @@
 import os
 from termcolor import cprint
 from datetime import datetime,timedelta
+from urllib2 import urlopen
+import json
 
 class Apache2(object):
 
@@ -23,7 +25,9 @@ class Apache2(object):
         self.retNone = {
                         "transfer": 0,
                         "requests": 0,
+                        "ips": {},
                         }
+        self.ip_to_geo = {}
 
     def report(self, interval=5):
         delta = timedelta(seconds = interval)
@@ -78,11 +82,32 @@ class Apache2(object):
                 # sure, we have a lot of info, lets leave them for next features. 
         
             log.close()
+            # gathered all data from 
             
+            for ip in ips:
+                if ":" in ip:
+                    print "ipv6 still out of support"
+                    del ips[ip]
+                    continue
+
+                if not self.ip_to_geo.has_key(ip):
+                    link = "http://freegeoip.net/json/%s" %(ip) 
+                    dzejson  = urlopen(link).read()
+                    foo = json.loads(dzejson)
+                    self.ip_to_geo[ip] = {
+                                            "longitude": float(foo["longitude"]),
+                                            "latitude": float(foo["latitude"]),
+                                            "number": int(ips[ip]),
+                                        }
+            #
+            a = {}
+            for ip in self.ip_to_geo:
+                a[ip] = self.ip_to_geo[ip]
+
             return {
-                    "transfer":transfer,
-                    "requests":requests,
-                    "ips": ips,
+                    "transfer": transfer,
+                    "requests": requests,
+                    "ips": a,
                     }
         else:
             return self.retNone

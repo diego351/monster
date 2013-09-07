@@ -36,7 +36,7 @@ def first_time():
     prompts = {
                 "username": "Gimme username below:",
                 "password": "Gimme password below:",
-                "database": "Gimme database name below:",
+                "db": "Gimme database name below:",
             }
     # It's going to be flexible like niggas pants
     suspects = {
@@ -55,7 +55,7 @@ def first_time():
         'apache2': {
                     "probe": "httpd.Apache2",
                     "requirements": [],
-                    "modules":  ["os", "datetime"],
+                    "modules":  ["os", "datetime","requests"],
                     "defaults": {
                                     "log_file": [
                                                 "/var/log/apache2/access.log",
@@ -89,6 +89,7 @@ def first_time():
     mod_to_pip = {
                     "MySQLdb": "mysql-python",
                     "psycopg2": "psycopg2",
+                    "requests": "requests",
                 }
                 
     
@@ -127,9 +128,9 @@ def first_time():
                         if luck:
                             cprint("I found an %s log file at %s" %(probe_name,found),"green")
                             while True:
-                                cprint("Do you want to save it as %s default log file? [Y/N]" %(probe_name),"green")
+                                cprint("Do you want to save it as %s default log file? [Y/n]" %(probe_name),"green")
                                 choice = raw_input()
-                                if 'Y' in choice or 'y' in choice and not ('N' in choice or 'n' in choice ):
+                                if 'Y' in choice or 'y' in choice or choice == "" and not ('N' in choice or 'n' in choice ):
                                     # we keep it
                                     break
                                 if 'N' in choice or 'n' in choice and not ('Y' in choice or 'y' in choice):

@@ -97,6 +97,7 @@ class Apache2(object):
                                             "longitude": float(foo["longitude"]),
                                             "latitude": float(foo["latitude"]),
                                             "number": int(ips[ip]),
+                                            "country_code": foo("country_code"),
                                             "ip": ip,
                                         }
             #

@@ -74,6 +74,9 @@
     {% if 'HeavyProcessStat' in enabled_probes %}
     google.setOnLoadCallback(drawHeavyProcessTables);
     {% endif %}
+    {% if 'Apache2' in enabled_probes %}
+    google.setOnLoadCallback(drawApacheMap);
+    {% endif %}
 
     var refresh = false;
     var pie_refresh = false;
@@ -98,7 +101,11 @@
             width: auto;
             margin: 0 auto !important;
         }
+    </style>
+    {% endif %}
 
+    {% if 'Apache2' in enabled_probes %}
+    <style>
         #apache-geo-ip-div-1 > div {
             width: auto;
             margin: 0 auto !important;

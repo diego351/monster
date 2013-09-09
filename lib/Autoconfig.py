@@ -115,7 +115,7 @@ def first_time():
 
                 # first of all we want to check whether we can help user
                 # somehow
-                if suspects[suspect].has_key("defaults"):
+                if "defaults" in suspects[suspect]:
                     for defa in suspects[suspect]["defaults"]:
                         luck = False
                         if "log_file" in defa:

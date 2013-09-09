@@ -75,7 +75,7 @@ class Nginx(object):
                 asdf = ipDateMesh.split("[")
                 date = asdf[1]
                 ip, meta0, meta1 = asdf[0].split()
-                if ips.has_key(ip):
+                if ip in ips:
                     ips[ip] += 1
                 else:
                     ips[ip] = 1
@@ -91,7 +91,7 @@ class Nginx(object):
                     print "ipv6 still out of support"
                     continue
 
-                if not self.ip_to_geo.has_key(ip):
+                if ip not in self.ip_to_geo:
                     link = "http://freegeoip.net/json/%s" % (ip)
                     dzejson = urlopen(link).read()
                     foo = json.loads(dzejson)

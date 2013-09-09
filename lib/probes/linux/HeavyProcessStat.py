@@ -24,7 +24,7 @@ class HeavyProcessStat(object):
                            # btw how to not pass a separator (use default separator == any whitespace) and split with max split? Any ideas? "\s" separator doesn't seem to work
             # this is nessesary since we can have processes with not unique
             # name like "Google Chrome"
-            if cpuDict.has_key(s[1]):
+            if s[i] in cpuDict:
                 cpuDict[s[1]] += float(s[0])
             else:
                 cpuDict[s[1]] = float(s[0])
@@ -41,7 +41,7 @@ class HeavyProcessStat(object):
                            # btw how to not pass a separator (use default separator == any whitespace) and split with max split? Any ideas? "\s" separator doesn't seem to work
             # this is nessesary since we can have processes with not unique
             # name like "Google Chrome"
-            if memDict.has_key(s[1]):
+            if s[1] in memDict:
                 memDict[s[1]] += float(s[0])
             else:
                 memDict[s[1]] = float(s[0])
@@ -55,7 +55,7 @@ class HeavyProcessStat(object):
         cpuList = []
 
         for process in cpuDict:
-            if self.prevCpuDict.has_key(process):
+            if process in self.prevCpuDict:
                 if cpuDict[process] > self.prevCpuDict[process]:
                     tendency = 1
                 elif cpuDict[process] == self.prevCpuDict[process]:
@@ -74,7 +74,7 @@ class HeavyProcessStat(object):
             self.prevCpuDict = cpuDict
 
         for process in memDict:
-            if self.prevMemDict.has_key(process):
+            if process in self.prevMemDict:
                 if memDict[process] > self.prevMemDict[process]:
                     tendency = 1
                 elif memDict[process] == self.prevMemDict[process]:

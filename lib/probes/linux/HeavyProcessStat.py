@@ -24,7 +24,7 @@ class HeavyProcessStat(object):
                            # btw how to not pass a separator (use default separator == any whitespace) and split with max split? Any ideas? "\s" separator doesn't seem to work
             # this is nessesary since we can have processes with not unique
             # name like "Google Chrome"
-            if s[i] in cpuDict:
+            if s[1] in cpuDict:
                 cpuDict[s[1]] += float(s[0])
             else:
                 cpuDict[s[1]] = float(s[0])

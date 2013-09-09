@@ -46,7 +46,7 @@ function drawApacheMap() {
     }, 1500);
 
     if (!apache_map_refresh) {
-      apache_map_refresh = setInterval(drawNginxMap, 2000);
+      apache_map_refresh = setInterval(drawApacheMap, 2000);
     }
     
   });

@@ -75,7 +75,7 @@ class Nginx(object):
                     ips[ip] += 1
                 else:
                     ips[ip] = 1
-                header, link, protocol = splitted[1].split()
+                #header, link, protocol = splitted[1].split()
                 code, size = splitted[2].split()
                 # sure, we have a lot of info, lets leave them for next features. 
         

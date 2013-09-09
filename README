@@ -1,0 +1,22 @@
+Monster v 1.0
+
+Overview:
+
+Monster is equipped with an autoconfigure feature. During first startup you're going to be
+asked a few questions about your system configuration. If you want to run configurator one
+more time just delete your current configuration file or rename it.It's going to be like this:
+mv config.cfg config.cfg.old
+During next startup a configurator will set a new config file for you. Note that you're going
+to answer those questions again.
+
+Befoure you run Monster make sure you have running every application you want to monitor. (e.g. MySQL or Nginx)
+(complete list of supported application can be found at the end of this document)
+
+Usage:
+
+using git clone repository: git@github.com:diego351/monster.git
+change directory to monster (cd monster)
+as root run ./start
+
+
+

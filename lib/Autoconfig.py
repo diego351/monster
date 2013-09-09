@@ -131,7 +131,7 @@ def first_time():
             break
     
     if password_flag:
-        cprint(prompts["password"],"green")
+        cprint(prompts["password"],"cyan")
         password = raw_input()
         config.set('overall','password',password)
 
@@ -173,7 +173,7 @@ def first_time():
 
                         if luck:
                             cprint("I found an %s log file at %s" %
-                                   (probe_name, found), "green")
+                                   (probe_name, found))
                             while True:
                                 cprint(
                                     "Do you want to save it as %s default log file? [Y/n]" % (probe_name), "green")

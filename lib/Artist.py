@@ -39,12 +39,10 @@ class Artist(object):
         if config_opts.has_option('overall', 'bind'):
             bind_opt = config_opts.get('overall', 'bind')
             if ':' in bind_opt:
-                print bind_opt
                 # e.g bind = 127.0.0.1:4567
                 app.bind_addr, app.bind_port = bind_opt.split(':')
                 app.bind_port = int(app.bind_port)
             else:
-                print "noport"
                 # eg. bind = 127.0.0.1
                 app.bind_addr = bind_opt
                 app.bind_port = 5000
@@ -98,7 +96,6 @@ class Artist(object):
         @app.route('/api/apache_geocache')
         def api_apache_geocache():
             apache_ips = app.diary.read('Apache2', how_many=1)[0]
-            print apache_ips
             return jsonify({
                 'apache_ips': {
                     "ips": apache_ips["ips"]
@@ -129,7 +126,6 @@ class Artist(object):
         @app.route('/api/nginx_geocache')
         def api_nginx_geocache():
             nginx_ips = app.diary.read('Nginx', how_many=1)[0]
-            print nginx_ips
             return jsonify({
                 'nginx_ips': {
                     "ips": nginx_ips.get("ips", [])

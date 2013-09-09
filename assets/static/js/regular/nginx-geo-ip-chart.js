@@ -25,8 +25,25 @@ function drawNginxMap() {
       colors: ['#ff2d55', '#5ac8fa', '#4cd964']
     };
     var chart_data = google.visualization.arrayToDataTable(ip_table);
-    var chart = new google.visualization.GeoChart(document.getElementById('nginx-geo-ip-div'));
+
+    if (document.getElementById('nginx-geo-ip-div-1').style.display == "") {
+        var paint_on = 'nginx-geo-ip-div-2';
+        var old_chart = 'nginx-geo-ip-div-1';
+    } else {
+        var paint_on = 'nginx-geo-ip-div-1';
+        var old_chart = 'nginx-geo-ip-div-2';
+    }
+    console.log("Painting on " + paint_on);
+
+    var chart = new google.visualization.GeoChart(document.getElementById(paint_on));
     chart.draw(chart_data, options);
+    /* I didn't check if charts exposed some onFinishedPainting hook,
+     * so I'm doing the stupid thing - giving it 1.5 seconds to paint.
+     */
+    setTimeout(function() {
+        document.getElementById(old_chart).style.display = "none";
+        document.getElementById(paint_on).style.display = "";
+    }, 1500);
 
     if (!nginx_map_refresh) {
       nginx_map_refresh = setInterval(drawNginxMap, 2000);

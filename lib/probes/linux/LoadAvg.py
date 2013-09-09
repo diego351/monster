@@ -4,8 +4,8 @@ class LoadAvg(object):
         pass
 
     def report(self):
-        
-        f = open("/proc/loadavg","r")
+
+        f = open("/proc/loadavg", "r")
         spl = f.read().split()
         f.close()
         return {
@@ -13,4 +13,3 @@ class LoadAvg(object):
             '5min': float(spl[1]),
             '15min': float(spl[2]),
         }
-

@@ -1,6 +1,8 @@
 from subprocess import check_output
 
+
 class LoadAvg(object):
+
     def __init__(self, options):
         pass
 
@@ -12,4 +14,3 @@ class LoadAvg(object):
             '5min': float(load_values[1]),
             '15min': float(load_values[2]),
         }
-

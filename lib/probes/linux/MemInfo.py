@@ -1,13 +1,13 @@
 class MemInfo:
+
     def __init__(self, options):
         pass
 
     def report(self):
-        f = open("/proc/meminfo","r")
+        f = open("/proc/meminfo", "r")
         txt = f.read()
         spl = txt.split("\n")
 
-       
         for line in spl:
             if "MemFree" in line:
                 tmp = line.split()
@@ -17,17 +17,17 @@ class MemInfo:
                 tmp = line.split()
                 total = int(tmp[1])
                 continue
-            elif "Cached" in line and not "SwapCached" in line: # kernel naming -,-
+            # kernel naming -,-
+            elif "Cached" in line and not "SwapCached" in line:
                 tmp = line.split()
                 cached = int(tmp[1])
                 continue
-       
-        
+
         used = total - free
         used -= cached
-        return { 
-                "free": free >> 10,
-                "used": used >> 10,
-                "total": total >> 10,
-                "cached": cached >> 10,
+        return {
+            "free": free >> 10,
+            "used": used >> 10,
+            "total": total >> 10,
+            "cached": cached >> 10,
         }

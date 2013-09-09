@@ -2,7 +2,9 @@
 import commands
 import math
 
+
 class MemInfo:
+
     def __init__(self, options):
         pass
 
@@ -23,11 +25,9 @@ class MemInfo:
         # as power!
 
         return {
-                "free": free >> (10 - pageSizeShift) ,
-                "total": total >> (10 - pageSizeShift),
-                "active": active >> (10 - pageSizeShift),
-                "inactive": inactive >> (10 - pageSizeShift),
-                "wired": wired >> (10 - pageSizeShift),
-                }
-        
-        
+            "free": free >> (10 - pageSizeShift),
+            "total": total >> (10 - pageSizeShift),
+            "active": active >> (10 - pageSizeShift),
+            "inactive": inactive >> (10 - pageSizeShift),
+            "wired": wired >> (10 - pageSizeShift),
+        }

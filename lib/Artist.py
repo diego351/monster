@@ -8,12 +8,13 @@ from multiprocessing import Process
 from time import sleep
 from time import time
 
+
 class Artist(object):
 
     def __init__(self, diary, config_opts):
 
         self.diary = diary
-        
+
         app = Flask(
             __name__,
             template_folder='../assets/templates',
@@ -24,6 +25,7 @@ class Artist(object):
         app.secret_key = "Alice touches herself."
         if config_opts.has_option('overall', 'password'):
             app.password = config_opts.get('overall', 'password')
+
             @app.before_request
             def check_auth():
                 if request.endpoint not in ('check_password', 'static'):
@@ -31,7 +33,7 @@ class Artist(object):
                         return redirect('/password')
         else:
             app.password = None
-        
+
         app.enabled_probes = config_opts.options('probes')
         # I can split too!
         # Since I can't do an "IF osx.LoadAVG OR linux.LoadAvg in Jinja
@@ -50,12 +52,13 @@ class Artist(object):
         def api_load(how_many=40):
             load_record = app.diary.read('LoadAvg', how_many)
             return jsonify({
-                'load': load_record, 
+                'load': load_record,
             })
 
         @app.route('/api/heavy_process_stat')
         def api_heavy_process_stat():
-            heavy_process_stat = app.diary.read('HeavyProcessStat', how_many=1)[0]
+            heavy_process_stat = app.diary.read(
+                'HeavyProcessStat', how_many=1)[0]
             return jsonify(heavy_process_stat)
 
         @app.route('/api/mem_info/<int:how_many>')
@@ -68,20 +71,19 @@ class Artist(object):
         @app.route('/api/apache')
         def api_apache():
             apache_activity = app.diary.read('Apache2')
-            
+
             return jsonify({
                 'apache_activity': apache_activity
-                                    })
+            })
 
         @app.route('/api/apache_geocache')
         def api_apache_geocache():
-            apache_ips = app.diary.read('Apache2', how_many = 1)[0]
+            apache_ips = app.diary.read('Apache2', how_many=1)[0]
             return jsonify({
-                'apache_ips':{
-                               "ips": apache_ips["ips"]
-                            }
-                            })
-
+                'apache_ips': {
+                    "ips": apache_ips["ips"]
+                }
+            })
 
         @app.route('/api/postgres/<int:how_many>')
         def api_postgres(how_many=30):
@@ -103,21 +105,22 @@ class Artist(object):
             return jsonify({
                 'nginx_stats': nginx_stats,
             })
+
         @app.route('/api/nginx_geocache')
         def api_nginx_geocache():
-            nginx_ips = app.diary.read('Nginx', how_many = 1)[0]
-	    print nginx_ips
+            nginx_ips = app.diary.read('Nginx', how_many=1)[0]
+            print nginx_ips
             return jsonify({
-                'nginx_ips':{
-                                "ips": nginx_ips.get("ips", [])
-                            }
-                            })
+                'nginx_ips': {
+                    "ips": nginx_ips.get("ips", [])
+                }
+            })
 
         @app.route('/password', methods=['GET', 'POST'])
         def check_password():
             if request.method == 'POST':
                 if request.form['password'] == app.password:
-                    session['is_logged_in'] = 'uh-uh!' 
+                    session['is_logged_in'] = 'uh-uh!'
                     return redirect('/')
                 else:
                     return render_template('password.html', message="Nope, that's not it.")
@@ -134,7 +137,8 @@ class Artist(object):
 
     def start(self):
 
-        self.flask_ps = Process(target=self.app.run, kwargs={'host': '0.0.0.0'})
+        self.flask_ps = Process(
+            target=self.app.run, kwargs={'host': '0.0.0.0'})
         self.flask_ps.start()
 
     def stop(self):

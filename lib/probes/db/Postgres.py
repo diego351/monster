@@ -1,4 +1,5 @@
 class Postgres(object):
+
     def __init__(self, options):
 
         try:
@@ -21,12 +22,12 @@ class Postgres(object):
         self.conn.autocommit = True
         self.firstTime = True
         self.emptyDict = {
-                            "returned": 0,
-                            "fetched": 0,
-                            "inserted": 0,
-                            "updated": 0,
-                            "deleted": 0,
-                            }
+            "returned": 0,
+            "fetched": 0,
+            "inserted": 0,
+            "updated": 0,
+            "deleted": 0,
+        }
 
     def getCurrentData(self):
         cursor = self.conn.cursor(cursor_factory=self.pg.extras.RealDictCursor)
@@ -34,12 +35,13 @@ class Postgres(object):
         cursor.execute(select)
         temp = cursor.fetchone()
         return {
-                "returned": int(str(temp["tup_returned"])),
-                "fetched":  int(str(temp["tup_fetched"])),
-                "inserted": int(str(temp["tup_inserted"])),
-                "updated":  int(str(temp["tup_updated"])),
-                "deleted": int(str(temp["tup_deleted"])),
-                }
+            "returned": int(str(temp["tup_returned"])),
+            "fetched":  int(str(temp["tup_fetched"])),
+            "inserted": int(str(temp["tup_inserted"])),
+            "updated":  int(str(temp["tup_updated"])),
+            "deleted": int(str(temp["tup_deleted"])),
+        }
+
     def report(self):
         if self.firstTime:
             self.myBuffer = self.getCurrentData()
@@ -47,10 +49,10 @@ class Postgres(object):
             return self.emptyDict
         else:
             curr = self.getCurrentData()
-            toRet = self.subtractDictValues(curr,self.myBuffer)
+            toRet = self.subtractDictValues(curr, self.myBuffer)
             self.myBuffer = curr
             return toRet
-        
-    
-    def subtractDictValues(self,a,b):
-        return dict( [ (n, a.get(n, 0) - b.get(n, 0)) for n in set(a)|set(b) ] ) #thank you stackoverflow!
+
+    def subtractDictValues(self, a, b):
+        #thank you stackoverflow!
+        return dict([(n, a.get(n, 0) - b.get(n, 0)) for n in set(a) | set(b)])

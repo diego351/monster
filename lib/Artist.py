@@ -35,6 +35,24 @@ class Artist(object):
         else:
             app.password = None
 
+        # See if configured to bind to specific address/port
+        if config_opts.has_option('overall', 'bind'):
+            bind_opt = config_opts.get('overall', 'bind')
+            if ':' in bind_opt:
+                print bind_opt
+                # e.g bind = 127.0.0.1:4567
+                app.bind_addr, app.bind_port = bind_opt.split(':')
+                app.bind_port = int(app.bind_port)
+            else:
+                print "noport"
+                # eg. bind = 127.0.0.1
+                app.bind_addr = bind_opt
+                app.bind_port = 5000
+
+        else:
+            app.bind_addr = '127.0.0.1'
+            app.bind_port = 5000
+
         app.enabled_probes = config_opts.options('probes')
         # I can split too!
         # Since I can't do an "IF osx.LoadAVG OR linux.LoadAvg in Jinja
@@ -140,7 +158,9 @@ class Artist(object):
     def start(self):
 
         self.flask_ps = Process(
-            target=self.app.run, kwargs={'host': '0.0.0.0'})
+            target=self.app.run,
+            kwargs={'host': self.app.bind_addr, 'port': self.app.bind_port}
+        )
         self.flask_ps.start()
 
     def stop(self):

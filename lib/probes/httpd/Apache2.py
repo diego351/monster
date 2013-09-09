@@ -105,7 +105,7 @@ class Apache2(object):
                     }
             #
             a = []
-            for ip in self.ip_to_geo:
+            for ip in ips:
                 a.append(self.ip_to_geo[ip])
 
             return {

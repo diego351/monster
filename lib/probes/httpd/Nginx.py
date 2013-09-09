@@ -102,7 +102,7 @@ class Nginx(object):
                         "ip": ip,
                     }
             a = []
-            for ip in self.ip_to_geo:
+            for ip in ips:
                 a.append(self.ip_to_geo[ip])
 
             return {

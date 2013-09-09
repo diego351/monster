@@ -13,8 +13,9 @@ def first_time():
     config.optionxform = str
 
     # Configure probes ..
+    config.add_section('overall')
     config.add_section('probes')
-
+    
     # Enable Load & MemInfo probes, those should work everywhere.
     # Figure out OS from sys.platform
     # See: http://docs.python.org/2/library/sys.html#sys.platform
@@ -34,9 +35,9 @@ def first_time():
 
     # Let's find some running services
     prompts = {
-        "username": "Gimme username below:",
-        "password": "Gimme password below:",
-        "database": "Gimme database name below:",
+        "username": "Write username below:",
+        "password": "Write password below:",
+        "database": "Write database name below:",
     }
     # It's going to be flexible like niggas pants
     suspects = {
@@ -89,8 +90,50 @@ def first_time():
     mod_to_pip = {
         "MySQLdb": "mysql-python",
         "psycopg2": "psycopg2",
-                    "requests": "requests",
+        "requests": "requests",
     }
+    cprint("Do you want Monster to be accesible outside this machine? [y/N]","green")
+    global_access = False
+    while True:
+        choice = raw_input()
+        if 'Y' in choice or 'y' in choice and not ('N' in choice or 'n' in choice):
+            global_access = True
+            break
+
+        if 'N' in choice or 'n' in choice and not ('Y' in choice or 'y' in choice):
+            global_access = False
+            break
+
+        if choice == "":
+            global_access = False
+            break
+
+    port = 5000
+    if global_access:
+        config.set('overall','bind',"0.0.0.0:"+str(port))
+    else:
+        config.set('overall','bind','127.0.0.1:'+str(port))
+
+    cprint("Do you want set access password for Monster? [Y/n]","green")
+    password_flag = True
+    while True:
+        choice = raw_input()
+        if 'Y' in choice or 'y' in choice  and not ('N' in choice or 'n' in choice):
+            password_flag = True
+            break
+
+        if 'N' in choice or 'n' in choice and not ('Y' in choice or 'y' in choice):
+            password_flag = False
+            break
+        
+        if choice == "":
+            password_flag = True
+            break
+    
+    if password_flag:
+        cprint(prompts["password"],"green")
+        password = raw_input()
+        config.set('overall','password',password)
 
     ps_out = subprocess.check_output(['ps', '-A'])
     for ps_line in ps_out.split("\n"):

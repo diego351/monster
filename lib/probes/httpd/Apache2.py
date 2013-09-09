@@ -63,7 +63,7 @@ class Apache2(object):
             for line in log:
                 requests += 1
                 splitted = line.split('"')
-                print splitted
+                #print splitted
                 ipDateMesh = splitted[0]
                 getLinkMesh = splitted[1]
                 code, size = splitted[2].split()

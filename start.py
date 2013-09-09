@@ -5,7 +5,7 @@ import ConfigParser
 import os
 import signal
 import sys
-from termcolor import cprint 
+from termcolor import cprint
 
 sys.path.append('lib')
 
@@ -26,7 +26,7 @@ try:
 
     # Read config file.
     config = ConfigParser.ConfigParser(allow_no_value=True)
-    # Without the following, ConfigParser screws up, converting option 
+    # Without the following, ConfigParser screws up, converting option
     # name to lowercase.. we need them to preserve case, because we
     # look for sections based on the names in [probes]
     config.optionxform = str

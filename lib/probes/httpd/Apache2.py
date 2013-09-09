@@ -76,7 +76,7 @@ class Apache2(object):
                 asdf = ipDateMesh.split("[")
                 date = asdf[1]
                 ip, meta0, meta1 = asdf[0].split()
-                if ip in hps:
+                if ip in ips:
                     ips[ip] += 1
                 else:
                     ips[ip] = 1

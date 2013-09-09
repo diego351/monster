@@ -80,6 +80,7 @@ class Artist(object):
         @app.route('/api/apache_geocache')
         def api_apache_geocache():
             apache_ips = app.diary.read('Apache2', how_many=1)[0]
+            print apache_ips
             return jsonify({
                 'apache_ips': {
                     "ips": apache_ips["ips"]

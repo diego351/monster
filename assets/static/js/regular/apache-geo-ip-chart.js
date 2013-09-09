@@ -3,6 +3,7 @@ function drawApacheMap() {
     var ip_table = [];   
     /* an empty geochart complains about needing only two columns */
     var ip_list = response.apache_ips.ips;
+    console.log(ip_list);
     if (ip_list.length == 0) {
         ip_table[0] = ['Latitude', 'Longitude'];
     } else {

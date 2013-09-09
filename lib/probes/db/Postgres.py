@@ -54,5 +54,5 @@ class Postgres(object):
             return toRet
 
     def subtractDictValues(self, a, b):
-        #thank you stackoverflow!
+        # thank you stackoverflow!
         return dict([(n, a.get(n, 0) - b.get(n, 0)) for n in set(a) | set(b)])

@@ -11,6 +11,10 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart", "table", "geochart"]});
+    </script>
+    <script type="text/javascript" src="/js/regular/probe-manager.js"></script>
 
     {% if 'LoadAvg' in enabled_probes %}
     <script type="text/javascript" src="js/regular/load-chart.js"></script>
@@ -49,46 +53,9 @@
     {% endif %}
 
     <script type="text/javascript">
-  
-    google.load("visualization", "1", {packages:["corechart", "table", "geochart"]});
-    {% if 'LoadAvg' in enabled_probes %}
-    google.setOnLoadCallback(getLoadAndPaintShit);
-    {% endif %}
-    {% if 'MemInfo' in enabled_probes %}
-    google.setOnLoadCallback(getMemInfoAndBakePie);
-    google.setOnLoadCallback(getMemInfoAndPaintLayers);
-    {% endif %}
-    {% if 'Apache2' in enabled_probes %}
-    google.setOnLoadCallback(drawApacheColumns);
-    {% endif %}
-    {% if 'Postgres' in enabled_probes %}
-    google.setOnLoadCallback(drawPostgresColumns);
-    {% endif %}
-    {% if 'Nginx' in enabled_probes %}
-    google.setOnLoadCallback(drawNginxColumns);
-    google.setOnLoadCallback(drawNginxMap);
-    {% endif %}
-    {% if 'MySQL' in enabled_probes %}
-    google.setOnLoadCallback(drawMysqlColumns);
-    {% endif %}
-    {% if 'HeavyProcessStat' in enabled_probes %}
-    google.setOnLoadCallback(drawHeavyProcessTables);
-    {% endif %}
-    {% if 'Apache2' in enabled_probes %}
-    google.setOnLoadCallback(drawApacheMap);
-    {% endif %}
-
-    var refresh = false;
-    var pie_refresh = false;
-    var area_refresh = false;
-    var apache_refresh = false;
-    var postgres_refresh = false;
-    var mysql_refresh = false;
-    var nginx_refresh = false;
-    var hps_refresh = false;
-    var nginx_map_refresh = false;
-    var apache_map_refresh = false;
-
+      $(document).ready(function() {
+          probes.start(3000); 
+      });
     </script>
 
     {% if 'Nginx' in enabled_probes %}
@@ -116,6 +83,7 @@
         }
     </style>
     {% endif %}
+
   </head>
   <body>
 

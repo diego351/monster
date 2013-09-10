@@ -1,4 +1,5 @@
 probes.register({
+  name: 'Nginx IP map',
   init: function() {
     this.map_1_obj = new google.visualization.GeoChart(document.getElementById('nginx-geo-ip-div-1'));
     this.map_2_obj = new google.visualization.GeoChart(document.getElementById('nginx-geo-ip-div-2'));

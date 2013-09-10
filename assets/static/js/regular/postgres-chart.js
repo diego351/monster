@@ -1,5 +1,5 @@
 probes.register({
-  name: 'Nginx',
+  name: 'Postgres',
   init: function() {
     this.pg_chart_obj = new google.visualization.ColumnChart(document.getElementById('postgres_columns'));
   },

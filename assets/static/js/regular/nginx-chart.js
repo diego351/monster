@@ -1,9 +1,12 @@
 probes.register({
+  name: 'Nginx',
   init: function() {
+	console.log("INIT");
     this.nginx_chart_obj = new google.visualization.ColumnChart(document.getElementById('nginx_columns'));
   },
   paint: function() {
     var nginx_chart_obj = this.nginx_chart_obj;
+	console.log("Painting.");
     $.ajax('/api/nginx/30', { dataType: 'json'}).done(function(response) {
       var nginxTable = [];
       nginxTable[0] = ['Index', 'Requests', 'Transfer'];
@@ -39,7 +42,6 @@ probes.register({
           }
         }
       };
-
       nginx_chart_obj.draw(nginxData, options);
     });
   }

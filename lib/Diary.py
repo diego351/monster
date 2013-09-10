@@ -51,7 +51,7 @@ class Diary(object):
             if self.counters[probe_name] % self.t[i] == 0:
                 #self.archive_max[probe_name][i].append() 
                 #which value in dictionary should we take as most important?
-                average_dict = getAvgDict(self.database[probe_name][- self.z[i] - 1: -1])
+                average_dict = self.getAvgDict(self.database[probe_name][- self.z[i] - 1: -1])
                 try:
                     self.archive_avg[i][probe_name].append(average_dict)
                 except KeyError:

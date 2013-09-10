@@ -1,7 +1,9 @@
 from collections import deque
 from multiprocessing.managers import BaseManager
 
+
 class Diary(object):
+
     def __init__(self):
         self.database = {}
 

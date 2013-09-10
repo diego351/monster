@@ -40,9 +40,17 @@
     <script type="text/javascript" src="js/regular/heavyproc-chart.js"></script>
     {% endif %}
 
+    {% if 'Nginx' in enabled_probes %}
+    <script type="text/javascript" src="js/regular/nginx-geo-ip-chart.js"></script>
+    {% endif %}
+
+    {% if 'Apache2' in enabled_probes %}
+    <script type="text/javascript" src="js/regular/apache-geo-ip-chart.js"></script>
+    {% endif %}
+
     <script type="text/javascript">
   
-    google.load("visualization", "1", {packages:["corechart", "table"]});
+    google.load("visualization", "1", {packages:["corechart", "table", "geochart"]});
     {% if 'LoadAvg' in enabled_probes %}
     google.setOnLoadCallback(getLoadAndPaintShit);
     {% endif %}
@@ -58,12 +66,16 @@
     {% endif %}
     {% if 'Nginx' in enabled_probes %}
     google.setOnLoadCallback(drawNginxColumns);
+    google.setOnLoadCallback(drawNginxMap);
     {% endif %}
     {% if 'MySQL' in enabled_probes %}
     google.setOnLoadCallback(drawMysqlColumns);
     {% endif %}
     {% if 'HeavyProcessStat' in enabled_probes %}
     google.setOnLoadCallback(drawHeavyProcessTables);
+    {% endif %}
+    {% if 'Apache2' in enabled_probes %}
+    google.setOnLoadCallback(drawApacheMap);
     {% endif %}
 
     var refresh = false;
@@ -74,9 +86,36 @@
     var mysql_refresh = false;
     var nginx_refresh = false;
     var hps_refresh = false;
+    var nginx_map_refresh = false;
+    var apache_map_refresh = false;
 
     </script>
 
+    {% if 'Nginx' in enabled_probes %}
+    <style>
+        #nginx-geo-ip-div-1 > div {
+            width: auto;
+            margin: 0 auto !important;
+        }    
+        #nginx-geo-ip-div-2 > div {
+            width: auto;
+            margin: 0 auto !important;
+        }
+    </style>
+    {% endif %}
+
+    {% if 'Apache2' in enabled_probes %}
+    <style>
+        #apache-geo-ip-div-1 > div {
+            width: auto;
+            margin: 0 auto !important;
+        }    
+        #apache-geo-ip-div-2 > div {
+            width: auto;
+            margin: 0 auto !important;
+        }
+    </style>
+    {% endif %}
   </head>
   <body>
 
@@ -158,6 +197,24 @@
     <div class="pure-g">
       <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">nginx stats</h1></div>  
       <div class="pure-u-2-3" id="nginx_columns" style="height:360px;"></div>
+      <div class="pure-u-1-6" style="height:360px;"></div> 
+    </div>
+    {% endif %}
+
+    {% if 'Nginx' in enabled_probes %}
+    <div class="pure-g">
+      <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">nginx map</h1></div>  
+      <div class="pure-u-2-3" id="nginx-geo-ip-div-1" style="height:360px;"></div>
+      <div class="pure-u-2-3" id="nginx-geo-ip-div-2" style="height:360px;display:none;"></div>
+      <div class="pure-u-1-6" style="height:360px;"></div> 
+    </div>
+    {% endif %}
+
+    {% if 'Apache2' in enabled_probes %}
+    <div class="pure-g">
+      <div class="pure-u-1-6" style="height:360px;"><h1 style="font-family:'esteban';text-align:center;">apache map</h1></div>  
+      <div class="pure-u-2-3" id="apache-geo-ip-div-1" style="height:360px;"></div>
+      <div class="pure-u-2-3" id="apache-geo-ip-div-2" style="height:360px;display:none;"></div>
       <div class="pure-u-1-6" style="height:360px;"></div> 
     </div>
     {% endif %}

@@ -1,5 +1,5 @@
 import requests
 
-link="http://localhost"
+link = "http://localhost"
 while True:
     requests.get(link)

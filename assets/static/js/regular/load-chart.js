@@ -6,17 +6,31 @@
     },
     paint: function() {
       var chart_obj = this.chart_obj;
-      $.ajax('/api/load/30', { dataType: 'json' }).done(function(response) {
+      $.ajax('/api/load/' + probes.mode, { dataType: 'json' }).done(function(response) {
         var loadTable = [];   
-        loadTable[0] = ['Index', '1m', '5m', '15m'];
-        for (var i = 0; i < response.load.length; i++) {
-          loadEntry = [
-            i,
-            response.load[i]['1min'],
-            response.load[i]['5min'],
-            response.load[i]['15min']
-          ];
-          loadTable.push(loadEntry);
+        if (probes.mode == 'live') {
+            loadTable[0] = ['Index', '1m', '5m', '15m'];
+            for (var i = 0; i < response.load.length; i++) {
+              loadEntry = [
+                i,
+                response.load[i]['1min'],
+                response.load[i]['5min'],
+                response.load[i]['15min']
+              ];
+              loadTable.push(loadEntry);
+            }
+        } else {
+            loadTable[0] = ['Index', '1m', '5m', '15m', 'Peak'];
+            for (var i = 0; i < response.load.length; i++) {
+              loadEntry = [
+                i,
+                response.load[i]['1min'],
+                response.load[i]['5min'],
+                response.load[i]['15min'],
+                response.load[i]['max']
+              ];
+              loadTable.push(loadEntry);
+            }
         }
 
         var options = {
@@ -24,7 +38,7 @@
           legend: 'top',
           fontName: 'maven pro',
           vAxis: {
-            maxValue: 3.0,
+            maxValue: 2.5,
             minValue: 0.0,
             viewWindow: {
               min: 0.0
@@ -40,7 +54,7 @@
             },
             viewWindow: {
               min:0,
-              max:29
+              max:200
             },
           },
           colors: ['#ff2d55', '#5ac8fa', '#4cd964']

@@ -54,6 +54,13 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
+          $('.mode_switch').click(function() {
+            console.log("Switching probe mode to: " + $(this).data('mode'));
+            $('.mode_switch').removeClass('active');
+            probes.mode = $(this).data('mode');
+            $(this).addClass('active');
+          });
+          probes.mode = "live";
           probes.start(3000); 
       });
     </script>
@@ -92,7 +99,13 @@
         <span class="monster-name">monster</span>
           <span class="monster-text">version one, we think</span>
       </div>
-      <div class="pure-u-1-4 yellowish"></div>
+      <div class="pure-u-1-4 yellowish">
+        <div style="line-height:39px;">
+          <a href="#" class="mode_switch" data-mode="live">live</a>
+          |
+          <a href="#" class="mode_switch" data-mode="daily">daily</a>
+        </div>
+      </div>
       <div class="pure-u-1-4 greenish"></div>
       <div class="pure-u-1-4 blueish">
         {% if password %}

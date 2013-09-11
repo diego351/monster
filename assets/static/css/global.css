@@ -55,3 +55,18 @@
 #logout-link:hover {
     color: #4b4b4b;
 }
+
+.mode_switch {
+    color: #b0b0b0;
+    text-decoration: none;
+    padding-left: 9px;
+    padding-right: 9px;
+}
+
+.mode_switch:hover {
+    color: #4b4b4b; 
+}
+
+.mode_switch.active {
+    text-decoration: underline;
+}

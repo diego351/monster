@@ -1,4 +1,4 @@
-probe.register({
+probes.register({
   name: 'MySQL',
   init: function() {
     this.mysql_chart_obj = new google.visualization.ColumnChart(document.getElementById('mysql_columns'));

@@ -65,11 +65,11 @@ class Artist(object):
                 enabled_probes=app.enabled_probes,
                 password=app.password
             )
-        @app.route('/debug/<int:how_many>')
-        def diary_debug(how_many = 1):
-            load_record = app.diary.readArchiveAvg("LoadAvg","1day",how_many)
+        @app.route('/api/load/daily')
+        def diary_debug():
+            load_record = app.diary.readArchiveAvg("LoadAvg","1day",how_many = 200)
             return jsonify({
-                'load_archive_1day': load_record,
+                'load_daily': load_record,
                 })
             
 

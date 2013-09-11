@@ -9,14 +9,14 @@ class Diary(object):
         self.archive_max = {}
         self.archive_avg = {}
 
-        self.f = 5
+        self.f = 3
         self.x = 200
 
         self.t = {
-            "30min": 1800,
+            #"30min": 1800,
             "1day": 84600,
-            "1week": 604800,
-            "1month": 2538000, # assuming month - 30 days
+            #"1week": 604800,
+            #"1month": 2538000, # assuming month - 30 days
             }
 
         self.c = {}
@@ -42,7 +42,7 @@ class Diary(object):
         except KeyError:
             self.database[probe_name] = deque([value], self.live_queue_size)
 
-        if "Heavy" in probe_name or "Apache" in probe_name or "Nginx" in probe_name:
+        if probe_name != "LoadAvg":
             return False
 
         try:

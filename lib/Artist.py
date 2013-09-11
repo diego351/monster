@@ -69,7 +69,7 @@ class Artist(object):
         def diary_debug():
             load_record = app.diary.readArchiveAvg("LoadAvg","1day",how_many = 200)
             return jsonify({
-                'load_daily': load_record,
+                'load': load_record,
                 })
             
 

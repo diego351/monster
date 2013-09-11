@@ -55,7 +55,7 @@ class Diary(object):
                 #self.archive_max[probe_name][i].append() 
                 #which value in dictionary should we take as most important?
                 sl = list(self.database[probe_name])[- self.z[i] - 1: -1]
-                average_dict = self.getAvgDict(sl)
+                average_dict = self.getAvgDict(sl, probe_name)
                 try:
                     self.archive_avg[i][probe_name].append(average_dict)
                 except KeyError:
@@ -77,19 +77,23 @@ class Diary(object):
         except KeyError:
             return None
 
-    def getAvgDict(self, a):
+    def getAvgDict(self, a, probe_name):
         # let's assume that a is a list of dictionaries
         avg = {}
-        for one_dict in a:
-            for value in one_dict:
-                try:
-                    avg[value] += one_dict[value]
-                except KeyError:
-                    avg[value] = one_dict[value]
-        #print avg
+        l = []
+        if probe_name == "LoadAvg":
+            for one_dict in a:
+                for value in one_dict:
+                    l.append(one_dict["1min"])
+                    try:
+                        avg[value] += one_dict[value]
+                    except KeyError:
+                        avg[value] = one_dict[value]
 
-        for v in avg:
-            avg[v] /= len(a)
+            for v in avg:
+                avg[v] /= len(a)
+
+        avg["max"] = max(l)
 
         return avg
 

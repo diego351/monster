@@ -14,9 +14,9 @@ class Diary(object):
 
         self.t = {
             #"30min": 1800,
-            "1day": 84600,
-            #"1week": 604800,
-            #"1month": 2538000, # assuming month - 30 days
+            "daily": 84600,
+            "weekly": 604800,
+            "monthly": 2538000, # assuming month - 30 days
             }
 
         self.c = {}
@@ -61,21 +61,21 @@ class Diary(object):
                 except KeyError:
                     self.archive_avg[i][probe_name] = deque([average_dict],self.c[i] + 16)
 
-    def read(self, probe_name, how_many=50):
-        try:
-            series = list(self.database[probe_name])[-how_many:]
-            return series
+    def read(self, probe_name, mode, how_many):
+        if mode == "live":
+            try:
+                series = list(self.database[probe_name])[-how_many:]
+                return series
 
-        except KeyError:
-           return None
+            except KeyError:
+                return None
+        else:
+            try:
+                series = list(self.archive_avg[mode][probe_name])[-how_many:]
+                return series
 
-    def readArchiveAvg(self,probe_name,interval,how_many = 50):
-        try:
-            series = list(self.archive_avg[interval][probe_name])[-how_many:]
-            return series
-
-        except KeyError:
-            return None
+            except KeyError:
+                return None
 
     def getAvgDict(self, a, probe_name):
         # let's assume that a is a list of dictionaries

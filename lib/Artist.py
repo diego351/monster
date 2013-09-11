@@ -73,9 +73,9 @@ class Artist(object):
                 })
             
 
-        @app.route('/api/load/<int:how_many>')
-        def api_load(how_many=40):
-            load_record = app.diary.read('LoadAvg', how_many)
+        @app.route('/api/load/live')
+        def api_load():
+            load_record = app.diary.read('LoadAvg', how_many = 40)
             return jsonify({
                 'load': load_record,
             })

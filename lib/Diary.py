@@ -41,6 +41,9 @@ class Diary(object):
             self.database[probe_name].append(value)
         except KeyError:
             self.database[probe_name] = deque([value], self.live_queue_size)
+            for i in self.t:
+                value["max"] = 0
+                self.archive_avg[i][probe_name] = deque([value],self.c[i] + 16)
 
         if probe_name != "LoadAvg":
             return False

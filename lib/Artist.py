@@ -23,7 +23,7 @@ class Artist(object):
         )
         app.diary = diary
         app.secret_key = "Alice touches herself."
-#        app.debug = True
+        app.debug = True
 
         if config_opts.has_option('overall', 'password'):
             app.password = config_opts.get('overall', 'password')
@@ -76,19 +76,19 @@ class Artist(object):
         @app.route('/api/heavy_process_stat')
         def api_heavy_process_stat():
             heavy_process_stat = app.diary.read(
-                'HeavyProcessStat', how_many=1)[0]
+                'HeavyProcessStat','live', how_many=1)[0]
             return jsonify(heavy_process_stat)
 
         @app.route('/api/mem_info/<int:how_many>')
         def api_mem_info(how_many=40):
-            mem_info_record = app.diary.read('MemInfo', how_many)
+            mem_info_record = app.diary.read('MemInfo', 'live', how_many)
             return jsonify({
                 'mem_info': mem_info_record,
             })
 
         @app.route('/api/apache')
         def api_apache():
-            apache_activity = app.diary.read('Apache2')
+            apache_activity = app.diary.read('Apache2', 'live', how_many = 50)
 
             return jsonify({
                 'apache_activity': apache_activity
@@ -96,7 +96,7 @@ class Artist(object):
 
         @app.route('/api/apache_geocache')
         def api_apache_geocache():
-            apache_ips = app.diary.read('Apache2', how_many=1)[0]
+            apache_ips = app.diary.read('Apache2', 'live', how_many=1)[0]
             return jsonify({
                 'apache_ips': {
                     "ips": apache_ips["ips"]
@@ -105,28 +105,28 @@ class Artist(object):
 
         @app.route('/api/postgres/<int:how_many>')
         def api_postgres(how_many=30):
-            postgres_stats = app.diary.read('Postgres', how_many)
+            postgres_stats = app.diary.read('Postgres', 'live', how_many)
             return jsonify({
                 'postgres_stats': postgres_stats,
             })
 
         @app.route('/api/mysql')
         def api_mysql():
-            mysql_stats = app.diary.read('MySQL')
+            mysql_stats = app.diary.read('MySQL', 'live', how_many = 50)
             return jsonify({
                 'mysql_stats': mysql_stats,
             })
 
         @app.route('/api/nginx/<int:how_many>')
         def api_nginx(how_many=30):
-            nginx_stats = app.diary.read('Nginx', how_many)
+            nginx_stats = app.diary.read('Nginx','live', how_many)
             return jsonify({
                 'nginx_stats': nginx_stats,
             })
 
         @app.route('/api/nginx_geocache')
         def api_nginx_geocache():
-            nginx_ips = app.diary.read('Nginx', how_many=1)[0]
+            nginx_ips = app.diary.read('Nginx','live', how_many=1)[0]
             return jsonify({
                 'nginx_ips': {
                     "ips": nginx_ips.get("ips", [])

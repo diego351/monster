@@ -57,7 +57,11 @@
               max:200
             },
           },
-          colors: ['#ff2d55', '#5ac8fa', '#4cd964']
+          colors: ['#ff2d55', '#5ac8fa', '#4cd964', '#e0e0e0'],
+          series: {
+            3: {lineWidth:1}
+          }
+
         };
       
         var chart_data = google.visualization.arrayToDataTable(loadTable);

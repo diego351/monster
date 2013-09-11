@@ -57,7 +57,11 @@
           $('.mode_switch').click(function() {
             console.log("Switching probe mode to: " + $(this).data('mode'));
             $('.mode_switch').removeClass('active');
-            probes.mode = $(this).data('mode');
+            if (window.location.hash) {
+              probes.mode = window.location.hash.substr(1);
+            } else {
+              probes.mode = $(this).data('mode');
+            }
             $(this).addClass('active');
           });
           probes.mode = "live";
@@ -102,11 +106,11 @@
       <div class="pure-u-1-4 yellowish">
         <div style="line-height:39px;color:#e9e9e9;font-weight:lighter;">
           View:
-          <a href="#" class="mode_switch" data-mode="live">live</a>
+          <a href="#live" class="mode_switch" data-mode="live">live</a>
           |
-          <a href="#" class="mode_switch" data-mode="daily">daily</a>
+          <a href="#daily" class="mode_switch" data-mode="daily">daily</a>
           |
-          <a href="#" class="mode_switch" data-mode="weekly">weekly</a>
+          <a href="#weekly" class="mode_switch" data-mode="weekly">weekly</a>
      
         </div>
       </div>

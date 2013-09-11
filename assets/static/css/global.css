@@ -59,8 +59,8 @@
 .mode_switch {
     color: #b0b0b0;
     text-decoration: none;
-    padding-left: 9px;
-    padding-right: 9px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .mode_switch:hover {

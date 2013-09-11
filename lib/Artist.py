@@ -23,6 +23,7 @@ class Artist(object):
         )
         app.diary = diary
         app.secret_key = "Alice touches herself."
+#        app.debug = True
 
         if config_opts.has_option('overall', 'password'):
             app.password = config_opts.get('overall', 'password')
@@ -64,6 +65,13 @@ class Artist(object):
                 enabled_probes=app.enabled_probes,
                 password=app.password
             )
+        @app.route('/debug/<int:how_many>')
+        def diary_debug(how_many = 1):
+            load_record = app.diary.readArchiveAvg("LoadAvg","1day",how_many)
+            return jsonify({
+                'load_archive_1day': load_record,
+                })
+            
 
         @app.route('/api/load/<int:how_many>')
         def api_load(how_many=40):

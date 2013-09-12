@@ -12,6 +12,7 @@ class Apache2(object):
         log_path_list = [
             "/var/log/apache2/access.log",
             "/var/log/apache2/access_log",
+            "/var/log/httpd/access_log",
         ]
         if 'log_file' in options:
             self.logPath = options['log_file']

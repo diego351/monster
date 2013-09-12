@@ -21,14 +21,14 @@ def first_time():
     # See: http://docs.python.org/2/library/sys.html#sys.platform
     if sys.platform == 'darwin':
         print "[+] You're on OS X. Enabling LoadAvg, MemInfo and HeavyProcessStat probes."
-        config.set('probes', 'osx.LoadAvg', None)
-        config.set('probes', 'osx.MemInfo', None)
-        config.set('probes', 'osx.HeavyProcessStat', None)
+        config.set('probes', 'osx.LoadAvg', "True")
+        config.set('probes', 'osx.MemInfo', "True")
+        config.set('probes', 'osx.HeavyProcessStat', "True")
     elif sys.platform == 'linux2':
         print "[+] You're on some flavor of Linux. Enabling LoadAvg, MemInfo and HeavyProcessStat probes."
-        config.set('probes', 'linux.LoadAvg', None)
-        config.set('probes', 'linux.MemInfo', None)
-        config.set('probes', 'linux.HeavyProcessStat', None)
+        config.set('probes', 'linux.LoadAvg', "True")
+        config.set('probes', 'linux.MemInfo', "True")
+        config.set('probes', 'linux.HeavyProcessStat', "True")
     else:
         cprint("Are you running this on a refrigerator?", "red")
         return False
@@ -152,7 +152,7 @@ def first_time():
                             "Seems like %s library is missing. How about 'pip install %s'?" %
                             (mod, mod_to_pip[mod]), "red")
 
-                config.set('probes', probe_name, None)
+                config.set('probes', probe_name, "True")
                 # for one probe one section in config file
                 config.add_section(probe_name)
 

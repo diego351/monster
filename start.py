@@ -25,7 +25,7 @@ try:
         Autoconfig.first_time()
 
     # Read config file.
-    config = ConfigParser.ConfigParser(allow_no_value=True)
+    config = ConfigParser.ConfigParser()
     # Without the following, ConfigParser screws up, converting option
     # name to lowercase.. we need them to preserve case, because we
     # look for sections based on the names in [probes]

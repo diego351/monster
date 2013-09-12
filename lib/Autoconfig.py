@@ -134,7 +134,7 @@ def first_time():
         password = raw_input()
         config.set('overall','password',password)
 
-    ps_out = commands.getoutput(['ps -A'])
+    ps_out = commands.getoutput('ps -A')
     for ps_line in ps_out.split("\n"):
         for suspect in suspects:
             if ps_line.find(suspect) != -1:

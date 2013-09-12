@@ -48,6 +48,7 @@ def first_time():
                 "log_file": [
                     "/var/log/apache2/access.log",
                     "/var/log/apache2/access_log",
+                    "/var/log/httpd/access_log",
                 ]
             }
         },
@@ -59,6 +60,7 @@ def first_time():
             "defaults": {
                 "log_file": [
                     "/var/log/apache2/access.log",
+                    "/var/log/apache2/access_log",
                     "/var/log/apache2/access_log",
                 ]
             }

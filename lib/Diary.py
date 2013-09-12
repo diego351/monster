@@ -1,15 +1,13 @@
 from collections import deque
 from multiprocessing.managers import BaseManager
 
-
 class Diary(object):
 
-    def __init__(self):
+    def __init__(self,args):
         self.database = {}
-        self.archive_max = {}
         self.archive_avg = {}
 
-        self.f = 3
+        self.f = args["interval"]
         self.x = 200
 
         self.t = {
@@ -27,7 +25,6 @@ class Diary(object):
 
         self.live_queue_size = max(self.z.values()) + 16 # just in case
         for i in self.t:
-            self.archive_max[i] = {}
             self.archive_avg[i] = {}
 
         self.counters = {}
@@ -47,7 +44,6 @@ class Diary(object):
 
         if probe_name != "LoadAvg":
             return False
-
         try:
             self.counters[probe_name] += 1
         except KeyError:
@@ -55,10 +51,14 @@ class Diary(object):
 
         for i in self.t:
             if self.counters[probe_name] % self.z[i] == 0:
-                #self.archive_max[probe_name][i].append() 
-                #which value in dictionary should we take as most important?
+                # debug begin    
+                from datetime import datetime
+                print "debug! " + str(i) + " " + str(self.counters[probe_name]) + " " + str(datetime.now())
+                # debug end
                 sl = list(self.database[probe_name])[- self.z[i] - 1: -1]
                 average_dict = self.getAvgDict(sl, probe_name)
+
+
                 try:
                     self.archive_avg[i][probe_name].append(average_dict)
                 except KeyError:

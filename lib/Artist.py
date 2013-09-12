@@ -80,7 +80,7 @@ class Artist(object):
             return jsonify(heavy_process_stat)
 
         @app.route('/api/mem_info/<int:how_many>')
-        def api_mem_info(how_many=40):
+        def api_mem_info(how_many=200):
             mem_info_record = app.diary.read('MemInfo', 'live', how_many)
             return jsonify({
                 'mem_info': mem_info_record,

@@ -16,7 +16,7 @@ from Diary import DiaryManager
 
 # Set up argparse, yo.
 parser = argparse.ArgumentParser(description="Draw some pretty pictures.")
-parser.add_argument('-i', '--interval', default=2, type=float)
+parser.add_argument('-i', '--interval', default=3, type=float)
 args = vars(parser.parse_args())
 
 try:
@@ -34,7 +34,7 @@ try:
 
     diary_manager = DiaryManager()
     diary_manager.start()
-    diary = diary_manager.Diary()
+    diary = diary_manager.Diary(args)
 
     foreman = Foreman(diary, args)
     foreman.load_probes(config)

@@ -1,9 +1,8 @@
 import ConfigParser
 import sys
-import subprocess
 from termcolor import cprint
 import os
-
+import commands
 
 def first_time():
     cprint("\n[#] First time? I'll be gentle. Let's see..", "white", "on_blue")
@@ -135,7 +134,7 @@ def first_time():
         password = raw_input()
         config.set('overall','password',password)
 
-    ps_out = subprocess.check_output(['ps', '-A'])
+    ps_out = commands.getoutput(['ps', '-A'])
     for ps_line in ps_out.split("\n"):
         for suspect in suspects:
             if ps_line.find(suspect) != -1:

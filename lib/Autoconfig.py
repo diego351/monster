@@ -9,7 +9,7 @@ def first_time():
     cprint("\n[#] First time? I'll be gentle. Let's see..", "white", "on_blue")
 
     # Let's start some mediocre autoconfig magic.
-    config = ConfigParser.ConfigParser(allow_no_value=True)
+    config = ConfigParser.ConfigParser()
     config.optionxform = str
 
     # Configure probes ..

@@ -1,71 +1,161 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Monster by diego351</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Monster : Beautiful server monitoring in like 5 minutes." />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Monster</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Monster</h1>
-        <p>Beautiful server monitoring. In five minutes.</p>
 
-        <p class="view"><a href="https://github.com/diego351/monster">View the Project on GitHub <small>diego351/monster</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/diego351/monster">View on GitHub</a>
 
+          <h1 id="project_title">Monster</h1>
+          <h2 id="project_tagline">Beautiful server monitoring in like 5 minutes.</h2>
 
-        <ul>
-          <li><a href="https://github.com/diego351/monster/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/diego351/monster/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/diego351/monster">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/diego351/monster/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/diego351/monster/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="monitoring-sucks-right-now" class="anchor" href="#monitoring-sucks-right-now"><span class="octicon octicon-link"></span></a>Monitoring sucks right now.</h1>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p>We'll say it out loud: no one has the time to set up Nagios. No one even has time to set up Munin. If you're in a startup, you most likely don't have a dedicated admin. Couple that with the need to constantly watch your servers to make sure they don't die on you and your users, and you're in a weird place. You have a huge need to monitor, but no resources.</p>
+
+<p>We've been there. And now we're here to help.</p>
+
+<h1>
+<a name="how-does-monster-help" class="anchor" href="#how-does-monster-help"><span class="octicon octicon-link"></span></a>How does Monster help?</h1>
+
+<p>By giving you nearly instant monitoring. Beautiful monitoring.</p>
+
+<p>Have nginx running? Monster will find out, look for the usual log files, and set nginx monitoring up for you. Using Postgres? MySQL? Monster will find out, ask you for some credentials and boom — you have a bunch of clean charts showing your web server and database usage. </p>
+
+<h1>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting started</h1>
+
+<p>Here, get started:</p>
+
+<pre><code>$ git clone XX 
+$ pip install -r requirements.txt
+$ ./start.py
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Now you have this charming thing listening at <code>localhost:5000</code>:
+<img src="http://i.imgur.com/Qf94Y3D.png" alt="screenshot!"> 
+Oh, we almost forgot, we also support mobile:
+<img src="http://i.imgur.com/iYXncJR.png" alt="the new iphone"></p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<h1>
+<a name="what-if-i-actually-want-to-configure-something" class="anchor" href="#what-if-i-actually-want-to-configure-something"><span class="octicon octicon-link"></span></a>What if I actually want to configure something?</h1>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>No problem. The <code>config.sample.cfg</code> file is full of good advice you can just ignore and drive into walls, or use to hack up a more suiting configuration. Actually, we'll paste it here for you:</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<pre><code>[overall]
+; Enables password protected access. Removing this line
+; will cause monster to be available to everyone.
+password = golem14
+; Allows you to bind on a specific address/port,
+; default is 127.0.0.1:5000. Bind on 0.0.0.0 to make
+; monster globally accessible.
+bind = 127.0.0.1:3456 
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+; Specify the probes you want to use here.
+; Per-probe configuration is done in their respective 
+; sections later on, take a look below.
+[probes]
+osx.LoadAvg
+osx.MemInfo
+osx.HeavyProcessStat
+httpd.Apache2
+db.Postgres
+db.MySQL
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+; Probe configuration.
+; The name of the section must be identical to the
+; probe's full name.
+[db.Postgres]
+; Specify here your PostgreSQL account settings.
+; All of them are required.
+username = takeoff
+password = 
+database = takeoff
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+[db.MySQL]
+; Specify here your MySQL account settings.
+; All of them are required.
+username = root
+password =
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+[osx.HeavyProcessStat]
+; This option changes number of processes showed.
+; Default is 5.
+proc_number = 5
+</code></pre>
+
+<h1>
+<a name="what-do-you-support" class="anchor" href="#what-do-you-support"><span class="octicon octicon-link"></span></a>What do you support?</h1>
+
+<p>The current list of probes is:</p>
+
+<ul>
+<li>
+<code>linux.LoadAvg</code> - traditional system load</li>
+<li>
+<code>linux.MemInfo</code> - a rundown of memory usage</li>
+<li>
+<code>linux.HeavyProcessStat</code> - CPU and memory hogs</li>
+<li>
+<code>linux.SystemInfo</code> - uptime, hostname, OS info</li>
+<li>
+<code>osx.LoadAvg</code> - traditional system load</li>
+<li>
+<code>osx.MemInfo</code> - a rundown of memory usage</li>
+<li>
+<code>osx.HeavyProcessStat</code> - CPU and memory hogs</li>
+<li>
+<code>osx.SystemInfo</code> - uptime, hostname, OS info</li>
+<li>
+<code>httpd.Apache2</code> - requests/transfer + Geo IP visualization</li>
+<li>
+<code>httpd.Nginx</code> - requests/transfer + Geo IP visualization</li>
+<li>
+<code>db.MySQL</code> - query statistics</li>
+<li>
+<code>db.Postgres</code> - query statistics</li>
+</ul><p>We'll be expanding.</p>
+
+<h1>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h1>
+
+<p>Monster is maintained by <a href="https://github.com/diego351" class="user-mention">@diego351</a> and <a href="https://github.com/maligree" class="user-mention">@maligree</a>. We're doing this in our spare time, so if you think you could spare a few cycles to contribute, we'd honestly be jolly as fuck.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/diego351">diego351</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Monster maintained by <a href="https://github.com/diego351">diego351</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>

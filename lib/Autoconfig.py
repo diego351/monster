@@ -79,7 +79,7 @@ def first_time():
 
         'postgres': {
             "probe": "db.Postgres",
-            "requirements":  ["username", "password", "db"],
+            "requirements":  ["username", "password", "database"],
             "modules":  ["psycopg2"],
         },
         'mysql': {
